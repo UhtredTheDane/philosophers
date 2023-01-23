@@ -10,52 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/philosophers.h"
 
-/* 
- * Description:
- * 
- * Converts the initial portion of the string pointed to nptr 
- * to int representation.
- */
-
-static int	ft_isspace(int c)
+int	get_mls_time()
 {
-	return (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ');
+
 }
 
-int	ft_atoi(const char *nptr)
-{
-	size_t	i;
-	int		negatif;
-	int		res;
-
-	i = 0;
-	while (ft_isspace(*(nptr + i)))
-		i++;
-	negatif = 0;
-	if (*(nptr + i) == '-' || *(nptr + i) == '+')
-		if (*(nptr + i++) == '-')
-			negatif = 1;
-	res = 0;
-	while (ft_isdigit(*(nptr + i)))
-	{
-		res += (*(nptr + i) - '0');
-		i++;
-		if (ft_isdigit(*(nptr + i)))
-			res *= 10;
-	}
-	if (negatif)
-		res *= -1;
-	return (res);
-}
 void	*run_philo(void *arg)
 {
+	t_data *data_philo;
+	struct timeval present_time;
+
+	data_philo = (t_data *) arg;
+	if (gettimeofday(&present_time, NULL) == -1)
+	{
+		printf("Impossible d'obtenir le temps actuel !\n");
+		return (NULL);
+	}
 	
+	//pense
+	printf(" %ld is thinking\n", num);
+	pthread_mutex_lock(data_philo->right_fork);
+	pthread_mutex_lock(data_philo->left_fork);
+
+	//manger
+	while (present_time < )
+
+
 	return (NULL);
 }
 
-t_data *init_data(int num_thread, t_philosopher *philos)
+t_data *init_data(int num_thread, int nb_of_philo, t_philosopher **philos)
 {
 	t_data *data;
 
@@ -63,9 +49,9 @@ t_data *init_data(int num_thread, t_philosopher *philos)
 	if (!data)
 		return (NULL);
 	data->num = num_thread;
-	if (pthread_mutex_init(&(data->right_fork.mutex), NULL) != 0)
+	if (pthread_mutex_init(&(data->right_fork), NULL) != 0)
 	{
-			printf("Error init mutex %d\n", i);
+			printf("Error init mutex %d\n", num_thread);
 			return (NULL);
 	}
 	if (num_thread > 1)
@@ -76,28 +62,40 @@ t_data *init_data(int num_thread, t_philosopher *philos)
 		else
 		{
 			position = 0;
-			philos[position].data_philo.left_fork = data->right_fork.mutex;
+			philos[position]->data_philo->left_fork = data->right_fork;
 		}
-		data->left_fork = philos[position].data_philo.right_fork;
-		philos[position].data_philo.left_fork = 
+		data->left_fork = philos[position]->data_philo->right_fork;
 	}
 	return (data);
 }
-
-t_philosopher *init_philo(int i)
+/*
+void	free_data(t_data *data)
 {
-	t_philosopher *philosophers;
+	
+	//pthread_mutex_destroy(pthread_mutex_t *mutex);
+}*/
 
-	philosophers = malloc(sizeof(t_philosopher));
-	if (!philosophers)
+t_philosopher *init_philo(int num_thread, int nb_of_philo, t_philosopher **philos)
+{
+	t_philosopher *philosopher;
+
+	philosopher = malloc(sizeof(t_philosopher));
+	if (!philosopher)
 		return (NULL);
-	philosophers->data_philo = init_data();
-	if (!philosophers->data_philo)
+	philosopher->data_philo = init_data(num_thread, nb_of_philo, philos);
+	if (!philosopher->data_philo)
 	{
-		free(philosophers);
+		free(philosopher);
 		return (NULL);
 	}
-
+	if (pthread_create(&(philosopher->thread), NULL, run_philo, philosopher->data_philo) != 0)
+	{
+		//free_data();
+		free(philosopher);
+		printf("Erreur creation thread %ld", philosopher->data_philo->num);
+		return (NULL);
+	}
+	return (philosopher);
 }
 
 int	main(int argc, char **argv)
@@ -107,6 +105,8 @@ int	main(int argc, char **argv)
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	nb_of_eat;
+	size_t i;
+	t_philosopher **philos;
 
 	if (argc < 4 && argc > 7)
 	{
@@ -120,43 +120,25 @@ int	main(int argc, char **argv)
 	time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		nb_of_eat = ft_atoi(argv[6]);
-
-	t_data *data_philos;
-	data_philo = malloc(sizeof(pthread_t) * nb_of_philo);
-	if (!data_philo)
+	philos = malloc(sizeof(t_philosopher *) * nb_of_philo);
+	if (!philos)
 		return (2);
-	mutex_data *forks;
-	pthread_t *philosophers;
-	philosophers = malloc(sizeof(pthread_t) * nb_of_philo);
-	if (!philosophers)
-	{
-		free(data_philo);
-		return (3);
-	}
-	forks = malloc(sizeof(mutex_data) * nb_of_philo);
-	if (!forks)
-	{
-		free(data_philo);
-		free(philosophers);
-		return (4);
-	}
-	size_t	i;
 	i = 0;
 	while (i < nb_of_philo)
 	{
-		if (pthread_mutex_init(&(forks[i].mutex), NULL)) == 0)
+		philos[i] = init_philo(i, nb_of_philo, philos);
+		if (!philos[i])
 		{
-			printf("Error init mutex %d\n", i);
-			return (5);
+			//free les philos
+			free(philos);
+			return (3);
 		}
-		data_philos[i].right_fork = da
-		pthread_create(&philosophers[i], NULL, run_philo, data_philo[]);
 		++i;
 	}
 	i = 0;
 	while (i < nb_of_philo)
 	{
-		pthread_join(philosophers[i], NULL);
+		pthread_join(philos[i]->thread, NULL);
 		++i;
 	}
 	return (0);

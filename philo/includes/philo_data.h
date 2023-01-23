@@ -8,7 +8,7 @@
 typedef struct s_data
 {
     size_t num;
-    mutex_data right_fork;
-    mutex_data left_fork;
+    pthread_mutex_t right_fork;
+    pthread_mutex_t left_fork;
 } t_data;
 #endif
