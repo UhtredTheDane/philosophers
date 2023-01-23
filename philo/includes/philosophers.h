@@ -10,4 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+
+typedef struct s_philosopher
+{
+    pthread_t thread;
+    t_data data_philo;
+}   t_philosopher;
+#endif
