@@ -18,7 +18,9 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include "philo_data.h"
+# include "config.h"
 # include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_philosopher
 {
@@ -26,4 +28,8 @@ typedef struct s_philosopher
     t_data *data_philo;
 }   t_philosopher;
 
+
+int	ft_isdigit(int c);
+static int	ft_isspace(int c);
+int	ft_atoi(const char *nptr);
 #endif

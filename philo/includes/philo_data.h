@@ -4,11 +4,13 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include "config.h"
 
 typedef struct s_data
 {
     size_t num;
     pthread_mutex_t right_fork;
     pthread_mutex_t left_fork;
+    t_config config;
 } t_data;
 #endif
