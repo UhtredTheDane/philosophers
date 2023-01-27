@@ -28,8 +28,10 @@ int	main(int argc, char **argv)
 	config.time_to_die = ft_atoi(argv[2]);
 	config.time_to_eat = ft_atoi(argv[3]);
 	config.time_to_sleep = ft_atoi(argv[4]);
-	
-
+	config.anyone_died = malloc(sizeof(int));
+	if (!config.anyone_died)
+		return (1);
+	*config.anyone_died = 1;
 
 	philos = malloc(sizeof(t_philosopher *) * config.nb_of_philo);
 	if (!philos)

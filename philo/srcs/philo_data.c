@@ -11,11 +11,17 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 			printf("Error init mutex %d\n", num_thread);
 			return (NULL);
 	}
+	if (pthread_mutex_init(&(data->check_if_dead), NULL) != 0)
+	{
+			printf("Error init mutex %d\n", num_thread);
+			return (NULL);
+	}
 	data->config.nb_of_philo = config->nb_of_philo;
 	data->config.time_to_die = config->time_to_die;
 	data->config.time_to_eat = config->time_to_eat;
 	data->config.time_to_sleep= config->time_to_sleep;
-
+	data->config.anyone_died = config.anyone_died;
+	
 	if (num_thread > 1)
 	{
 		int position;
