@@ -67,6 +67,8 @@ int    think(t_data *data_philo, long base_time, long start_life)
 	if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
         	return (0);
 	printf("%ld %ld has taken left fork\n", timer, data_philo->num);
+	if (!eat(data_philo, data_philo->config.base_time, &start_life))
+			return (0);
 	return (1);
 }
 
@@ -104,6 +106,8 @@ int eat(t_data *data_philo, long base_time, long *start_life)
 	}
     	pthread_mutex_unlock(&data_philo->right_fork);
 	pthread_mutex_unlock(&data_philo->left_fork);
+	if (!sleep_action(data_philo, data_philo->config.base_time, start_life))
+			return (0);
 	return (1);
 }
 
@@ -150,13 +154,8 @@ void	*run_philo(void *arg)
 	start_life = 0;
 	is_alive = 1;
 	while (is_alive)
-	{
 		if (!think(data_philo, data_philo->config.base_time, start_life))
 			return (NULL);
-        if (!eat(data_philo, data_philo->config.base_time, &start_life))
-			return (NULL);
-        if (!sleep_action(data_philo, data_philo->config.base_time, start_life))
-			return (NULL);
-	}
+
 	return (NULL);
 }
