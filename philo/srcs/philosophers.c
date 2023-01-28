@@ -38,7 +38,7 @@ int is_anyone_dead(t_data *data_philo)
 
 int is_not_dead(t_data *data_philo, long timer, long start_life)
 {
-    if ( timer > start_life + data_philo->config.time_to_die)
+    if (timer > start_life + data_philo->config.time_to_die)
 	{
 		printf("%ld %ld died\n", timer, data_philo->num);
 		pthread_mutex_lock(&data_philo->check_if_dead);
@@ -63,12 +63,12 @@ int    think(t_data *data_philo, long base_timer, long start_life)
 	pthread_mutex_lock(&data_philo->right_fork);
 	timer = get_mls_time() - base_timer;
 	if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
-        return (0);
+        	return (0);
 	printf("%ld %ld has taken right fork\n", timer, data_philo->num);
 	pthread_mutex_lock(&data_philo->left_fork);
 	timer = get_mls_time() - base_timer;
 	if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
-        return (0);
+        	return (0);
 	printf("%ld %ld has taken left fork\n", timer, data_philo->num);
 	return (1);
 }
@@ -77,25 +77,28 @@ int eat(t_data *data_philo, long base_timer, long *start_life)
 {
     long    res;
     long    rest;
-
+	long timer;
 	res = data_philo->config.time_to_eat / 5;
 	rest = data_philo->config.time_to_eat % 5;
 	*start_life = get_mls_time() - base_timer;
 	if (is_anyone_dead(data_philo))
 		return (0);
+	timer = *start_life;
 	printf("%ld %ld is eating\n", *start_life, data_philo->num);
 	while (res >= 0)
 	{
 		if (res)
 		{
 			usleep(5 * 1000);
-			if (!is_not_dead(data_philo, *start_life + 5, *start_life) || is_anyone_dead(data_philo))
+			timer += 5;
+			if (!is_not_dead(data_philo, timer, *start_life) || is_anyone_dead(data_philo))
             	return (0);
 		}
 		else
 		{
 			usleep(rest * 1000);
-			if (!is_not_dead(data_philo, *start_life + rest, *start_life) || is_anyone_dead(data_philo))
+			timer += rest;
+			if (!is_not_dead(data_philo, timer, *start_life) || is_anyone_dead(data_philo))
             	return (0);
 		}
 		--res;
@@ -109,25 +112,29 @@ int    sleep_action(t_data *data_philo, long base_timer, long start_life)
 {
     long    res;
     long    rest;
+	long timer;
 
 	res = data_philo->config.time_to_sleep / 5;
 	rest = data_philo->config.time_to_sleep % 5;
 	if (is_anyone_dead(data_philo))
 		return (0);
-	printf("%ld %ld is sleeping\n", get_mls_time() - base_timer, data_philo->num);
+	timer = get_mls_time() - base_timer;
+	printf("%ld %ld is sleeping\n", timer, data_philo->num);
 	while (res >= 0)
 	{
 		if (res)
 		{
 			usleep(5 * 1000);
-			if (!is_not_dead(data_philo, start_life + 5, start_life) || is_anyone_dead(data_philo))
-            	return (0);
+			timer += 5;
+			if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
+            			return (0);
 		}
 		else
 		{
 			usleep(rest * 1000);
-			if (!is_not_dead(data_philo, start_life + rest, start_life) || is_anyone_dead(data_philo))
-            	return (0);
+			timer += rest;
+			if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
+            			return (0);
 		}
 		--res;
 	}
