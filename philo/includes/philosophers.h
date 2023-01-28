@@ -32,4 +32,15 @@ typedef struct s_philosopher
 int	ft_isdigit(int c);
 static int	ft_isspace(int c);
 int	ft_atoi(const char *nptr);
+long	get_mls_time();
+long convert_s_in_ms(time_t *s_nb);
+long convert_us_in_ms(suseconds_t *micro_nb);
+t_philosopher *init_philo(int num_thread, t_config *config, t_philosopher **philos);
+int is_anyone_dead(t_data *data_philo);
+int is_not_dead(t_data *data_philo, long timer, long start_life);
+int    think(t_data *data_philo, long base_timer, long start_life);
+void  eat(t_data *data_philo, long base_timer, long *start_life);
+int    sleep(t_data *data_philo, long base_timer, long start_life);
+void	*run_philo(void *arg);
+t_data *init_data(int num_thread, t_config *config, t_philosopher **philos);
 #endif

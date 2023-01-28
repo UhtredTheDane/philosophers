@@ -1,3 +1,5 @@
+#include "../includes/philosophers.h"
+
 t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 {
 	t_data *data;

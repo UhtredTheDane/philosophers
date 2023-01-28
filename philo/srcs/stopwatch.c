@@ -1,3 +1,5 @@
+#include "../includes/philosophers.h"
+
 long convert_us_in_ms(suseconds_t *micro_nb)
 {
 	return (*micro_nb / 1000);
