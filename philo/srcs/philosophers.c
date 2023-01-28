@@ -49,38 +49,38 @@ int is_not_dead(t_data *data_philo, long timer, long start_life)
     return (1);
 }
 
-int    think(t_data *data_philo, long base_timer, long start_life)
+int    think(t_data *data_philo, long base_time, long start_life)
 {
 	long timer;
 
-	if (start_life == base_timer)
+	if (start_life == base_time)
 		timer = 0;
 	else
-		timer = get_mls_time() - base_timer;
+		timer = get_mls_time() - base_time;
 	if (is_anyone_dead(data_philo))
 		return (0);
 	printf("%ld %ld is thinking\n", timer, data_philo->num);
 	pthread_mutex_lock(&data_philo->right_fork);
-	timer = get_mls_time() - base_timer;
+	timer = get_mls_time() - base_time;
 	if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
         	return (0);
 	printf("%ld %ld has taken right fork\n", timer, data_philo->num);
 	pthread_mutex_lock(&data_philo->left_fork);
-	timer = get_mls_time() - base_timer;
+	timer = get_mls_time() - base_time;
 	if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
         	return (0);
 	printf("%ld %ld has taken left fork\n", timer, data_philo->num);
 	return (1);
 }
 
-int eat(t_data *data_philo, long base_timer, long *start_life)
+int eat(t_data *data_philo, long base_time, long *start_life)
 {
     long    res;
     long    rest;
 	long timer;
 	res = data_philo->config.time_to_eat / 5;
 	rest = data_philo->config.time_to_eat % 5;
-	*start_life = get_mls_time() - base_timer;
+	*start_life = get_mls_time() - base_time;
 	if (is_anyone_dead(data_philo))
 		return (0);
 	timer = *start_life;
@@ -108,7 +108,7 @@ int eat(t_data *data_philo, long base_timer, long *start_life)
 	return (1);
 }
 
-int    sleep_action(t_data *data_philo, long base_timer, long start_life)
+int    sleep_action(t_data *data_philo, long base_time, long start_life)
 {
     long    res;
     long    rest;
@@ -118,7 +118,7 @@ int    sleep_action(t_data *data_philo, long base_timer, long start_life)
 	rest = data_philo->config.time_to_sleep % 5;
 	if (is_anyone_dead(data_philo))
 		return (0);
-	timer = get_mls_time() - base_timer;
+	timer = get_mls_time() - base_time;
 	printf("%ld %ld is sleeping\n", timer, data_philo->num);
 	while (res >= 0)
 	{
@@ -144,21 +144,19 @@ int    sleep_action(t_data *data_philo, long base_timer, long start_life)
 void	*run_philo(void *arg)
 {
 	t_data *data_philo;
-	long base_timer;
 	long start_life;
 	int is_alive;
 
 	data_philo = (t_data *) arg;
-	base_timer = get_mls_time();
 	start_life = 0;
 	is_alive = 1;
 	while (is_alive)
 	{
-		if (!think(data_philo, base_timer, start_life))
+		if (!think(data_philo, data_philo->config.base_time, start_life))
 			return (NULL);
-        if (!eat(data_philo, base_timer, &start_life))
+        if (!eat(data_philo, data_philo->config.base_time, &start_life))
 			return (NULL);
-        if (!sleep_action(data_philo, base_timer, start_life))
+        if (!sleep_action(data_philo, data_philo->config.base_time, start_life))
 			return (NULL);
 	}
 	return (NULL);

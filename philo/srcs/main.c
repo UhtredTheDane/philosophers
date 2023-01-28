@@ -37,6 +37,7 @@ int	main(int argc, char **argv)
 	if (!philos)
 		return (2);
 	i = 0;
+	config.base_timer = get_mls_time();
 	while (i < config.nb_of_philo)
 	{
 		philos[i] = init_philo(i, &config, philos);

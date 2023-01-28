@@ -38,9 +38,9 @@ long convert_us_in_ms(suseconds_t *micro_nb);
 t_philosopher *init_philo(int num_thread, t_config *config, t_philosopher **philos);
 int is_anyone_dead(t_data *data_philo);
 int is_not_dead(t_data *data_philo, long timer, long start_life);
-int    think(t_data *data_philo, long base_timer, long start_life);
-int  eat(t_data *data_philo, long base_timer, long *start_life);
-int    sleep_action(t_data *data_philo, long base_timer, long start_life);
+int    think(t_data *data_philo, long base_time, long start_life);
+int  eat(t_data *data_philo, long base_time, long *start_life);
+int    sleep_action(t_data *data_philo, long base_time, long start_life);
 void	*run_philo(void *arg);
 t_data *init_data(int num_thread, t_config *config, t_philosopher **philos);
 #endif
