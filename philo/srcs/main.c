@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/01/28 08:28:11 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/01/28 10:00:06 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 	if (!philos)
 		return (2);
 	i = 0;
-	config.base_timer = get_mls_time();
+	config.base_time = get_mls_time();
 	while (i < config.nb_of_philo)
 	{
 		philos[i] = init_philo(i, &config, philos);

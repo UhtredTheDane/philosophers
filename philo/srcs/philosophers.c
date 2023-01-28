@@ -53,10 +53,7 @@ int    think(t_data *data_philo, long base_time, long start_life)
 {
 	long timer;
 
-	if (start_life == base_time)
-		timer = 0;
-	else
-		timer = get_mls_time() - base_time;
+	timer = get_mls_time() - base_time;
 	if (is_anyone_dead(data_philo))
 		return (0);
 	printf("%ld %ld is thinking\n", timer, data_philo->num);
@@ -78,6 +75,7 @@ int eat(t_data *data_philo, long base_time, long *start_life)
     long    res;
     long    rest;
 	long timer;
+
 	res = data_philo->config.time_to_eat / 5;
 	rest = data_philo->config.time_to_eat % 5;
 	*start_life = get_mls_time() - base_time;
@@ -87,6 +85,7 @@ int eat(t_data *data_philo, long base_time, long *start_life)
 	printf("%ld %ld is eating\n", *start_life, data_philo->num);
 	while (res >= 0)
 	{
+		printf("%ld entrain de manger\n", data_philo->num);
 		if (res)
 		{
 			usleep(5 * 1000);
@@ -103,7 +102,7 @@ int eat(t_data *data_philo, long base_time, long *start_life)
 		}
 		--res;
 	}
-    pthread_mutex_unlock(&data_philo->right_fork);
+    	pthread_mutex_unlock(&data_philo->right_fork);
 	pthread_mutex_unlock(&data_philo->left_fork);
 	return (1);
 }

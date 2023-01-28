@@ -23,7 +23,7 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 	data->config.time_to_eat = config->time_to_eat;
 	data->config.time_to_sleep= config->time_to_sleep;
 	data->config.anyone_died = config->anyone_died;
-	
+	data->config.base_time = config->base_time;	
 	if (num_thread > 1)
 	{
 		int position;
