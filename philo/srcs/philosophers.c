@@ -73,7 +73,7 @@ int    think(t_data *data_philo, long base_timer, long start_life)
 	return (1);
 }
 
-void  eat(t_data *data_philo, long base_timer, long *start_life)
+int eat(t_data *data_philo, long base_timer, long *start_life)
 {
     long    res;
     long    rest;
@@ -98,14 +98,14 @@ void  eat(t_data *data_philo, long base_timer, long *start_life)
 			if (!is_not_dead(data_philo, *start_life + rest, *start_life) || is_anyone_dead(data_philo))
             	return (0);
 		}
-		--res
+		--res;
 	}
     pthread_mutex_unlock(&data_philo->right_fork);
 	pthread_mutex_unlock(&data_philo->left_fork);
 	return (1);
 }
 
-int    sleep(t_data *data_philo, long base_timer, long start_life)
+int    sleep_action(t_data *data_philo, long base_timer, long start_life)
 {
     long    res;
     long    rest;
@@ -120,16 +120,16 @@ int    sleep(t_data *data_philo, long base_timer, long start_life)
 		if (res)
 		{
 			usleep(5 * 1000);
-			if (!is_not_dead(data_philo, start_life + 5, *start_life) || is_anyone_dead(data_philo))
+			if (!is_not_dead(data_philo, start_life + 5, start_life) || is_anyone_dead(data_philo))
             	return (0);
 		}
 		else
 		{
 			usleep(rest * 1000);
-			if (!is_not_dead(data_philo, start_life + rest, *start_life) || is_anyone_dead(data_philo))
+			if (!is_not_dead(data_philo, start_life + rest, start_life) || is_anyone_dead(data_philo))
             	return (0);
 		}
-		--res
+		--res;
 	}
 	return (1);
 }
@@ -151,7 +151,7 @@ void	*run_philo(void *arg)
 			return (NULL);
         if (!eat(data_philo, base_timer, &start_life))
 			return (NULL);
-        if (!sleep(data_philo, base_timer, start_life))
+        if (!sleep_action(data_philo, base_timer, start_life))
 			return (NULL);
 	}
 	return (NULL);
