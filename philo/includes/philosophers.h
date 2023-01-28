@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:16 by agengemb          #+#    #+#             */
-/*   Updated: 2023/01/28 08:08:32 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/01/28 08:27:29 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
  
@@ -30,7 +30,7 @@ typedef struct s_philosopher
 
 
 int	ft_isdigit(int c);
-static int	ft_isspace(int c);
+int	ft_isspace(int c);
 int	ft_atoi(const char *nptr);
 long	get_mls_time();
 long convert_s_in_ms(time_t *s_nb);

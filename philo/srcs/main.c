@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/01/22 21:38:51 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/01/28 08:28:11 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	size_t i;
+	int i;
 	t_philosopher **philos;
 	t_config config;
 
