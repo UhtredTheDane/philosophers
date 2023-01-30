@@ -5,7 +5,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "config.h"
-
+   
 typedef struct s_data
 {
     size_t num;

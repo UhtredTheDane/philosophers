@@ -1,7 +1,7 @@
  
 #ifndef CONFIG_H
 # define CONFIG_H
-
+ 
 typedef struct s_config
 {
     int	nb_of_philo;

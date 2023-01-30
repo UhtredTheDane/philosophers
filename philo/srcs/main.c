@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
+ 
 int	main(int argc, char **argv)
 {
 	int i;
@@ -49,6 +49,7 @@ int	main(int argc, char **argv)
 		}
 		++i;
 	}
+	
 	i = 0;
 	while (i < config.nb_of_philo)
 	{

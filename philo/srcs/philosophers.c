@@ -104,7 +104,7 @@ int eat(t_data *data_philo, long base_time, long *start_life)
 		}
 		--res;
 	}
-    	pthread_mutex_unlock(&data_philo->right_fork);
+    pthread_mutex_unlock(&data_philo->right_fork);
 	pthread_mutex_unlock(&data_philo->left_fork);
 	if (!sleep_action(data_philo, data_philo->config.base_time, start_life))
 			return (0);
