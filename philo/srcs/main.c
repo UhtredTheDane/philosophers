@@ -6,27 +6,12 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/01/30 18:43:33 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/01/30 23:33:36 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
  
-void set_left_forks(t_philosopher **philos, int nb_of_philo)
-{
-	int i;
-
-	i = 0;
-	while (i < nb_of_philo)
-	{
-		if (i == 0)
-			philos[i]->data_philo->left_fork = philos[nb_of_philo - 1]->data_philo->left_fork;
-		else
-			philos[i]->data_philo->left_fork = philos[i - 1]->data_philo->left_fork;
-		++i;
-	}
-}
-
 int	main(int argc, char **argv)
 {
 	int i;
@@ -64,7 +49,6 @@ int	main(int argc, char **argv)
 		}
 		++i;
 	}
-	set_left_forks(philos, config.nb_of_philo);
 	i = 0;
 	while (i < config.nb_of_philo)
 	{
