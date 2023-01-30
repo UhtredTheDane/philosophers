@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 	config.base_time = get_mls_time();
 	while (i < config.nb_of_philo)
 	{
-		philos[i] = init_philo(i, &config);
+		philos[i] = init_philo(i, &config, philos);
 		if (!philos[i])
 		{
 			//free les philos
