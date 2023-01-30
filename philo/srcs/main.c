@@ -49,7 +49,7 @@ int	main(int argc, char **argv)
 		}
 		++i;
 	}
-	
+
 	i = 0;
 	while (i < config.nb_of_philo)
 	{
