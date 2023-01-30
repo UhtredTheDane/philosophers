@@ -25,18 +25,6 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 	data->config.time_to_sleep= config->time_to_sleep;
 	data->config.anyone_died = config->anyone_died;
 	data->config.base_time = config->base_time;	
-	if (num_thread > 1)
-	{
-		int position;
-		if (num_thread != config->nb_of_philo - 1)
-			position = num_thread - 1;
-		else
-		{
-			position = 0;
-			philos[position]->data_philo->left_fork = data->right_fork;
-		}
-		data->left_fork = philos[position]->data_philo->right_fork;
-	}
 	return (data);
 }
 

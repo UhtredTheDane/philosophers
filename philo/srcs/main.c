@@ -12,6 +12,21 @@
 
 #include "../includes/philosophers.h"
  
+void set_left_forks(t_philosopher **philos, int nb_of_philo)
+{
+	int i;
+
+	i = 0;
+	while (i < nb_of_philo)
+	{
+		if (i == 0)
+			philos[i]->data_philo->left_fork = philos[nb_of_philo - 1]->data_philo->left_fork;
+		else
+			philos[i]->data_philo->left_fork = philos[i - 1]->data_philo->left_fork;
+		++i;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	int i;
@@ -49,7 +64,7 @@ int	main(int argc, char **argv)
 		}
 		++i;
 	}
-
+	set_left_forks(t_philosopher **philos);
 	i = 0;
 	while (i < config.nb_of_philo)
 	{

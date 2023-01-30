@@ -10,7 +10,7 @@ typedef struct s_data
 {
     size_t num;
     pthread_mutex_t right_fork;
-    pthread_mutex_t left_fork;
+    pthread_mutex_t *left_fork;
     pthread_mutex_t check_if_dead;
     t_config config;
     
