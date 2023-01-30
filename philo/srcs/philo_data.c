@@ -1,6 +1,6 @@
 #include "../includes/philosophers.h"
 
-t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
+t_data *init_data(int num_thread, t_config *config)
 {
 	t_data *data;
 
@@ -18,7 +18,6 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 			printf("Error init mutex %d\n", num_thread);
 			return (NULL);
 	}
-	data->philos = philos;
 	data->config.nb_of_philo = config->nb_of_philo;
 	data->config.time_to_die = config->time_to_die;
 	data->config.time_to_eat = config->time_to_eat;

@@ -1,13 +1,13 @@
 #include "../includes/philosophers.h"
 
-t_philosopher *init_philo(int num_thread, t_config *config, t_philosopher **philos)
+t_philosopher *init_philo(int num_thread, t_config *config)
 {
 	t_philosopher *philosopher;
 
 	philosopher = malloc(sizeof(t_philosopher));
 	if (!philosopher)
 		return (NULL);
-	philosopher->data_philo = init_data(num_thread, config, philos);
+	philosopher->data_philo = init_data(num_thread, config);
 	if (!philosopher->data_philo)
 	{
 		free(philosopher);
@@ -62,7 +62,7 @@ int    think(t_data *data_philo, long base_time, long start_life)
 	if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
         	return (0);
 	printf("%ld %ld has taken right fork\n", timer, data_philo->num);
-	pthread_mutex_lock(data_philo->left_fork);
+		pthread_mutex_lock(data_philo->left_fork);
 	timer = get_mls_time() - base_time;
 	if (!is_not_dead(data_philo, timer, start_life) || is_anyone_dead(data_philo))
         	return (0);
@@ -105,8 +105,8 @@ int eat(t_data *data_philo, long base_time, long *start_life)
 		--res;
 	}
     pthread_mutex_unlock(&data_philo->right_fork);
-	pthread_mutex_unlock(data_philo->left_fork);
-	if (!sleep_action(data_philo, data_philo->config.base_time, start_life))
+	//pthread_mutex_unlock(&data_philo->left_fork);
+	if (!sleep_action(data_philo, data_philo->config.base_time, *start_life))
 			return (0);
 	return (1);
 }

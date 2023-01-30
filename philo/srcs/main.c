@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/01/28 10:00:06 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:43:33 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 	config.base_time = get_mls_time();
 	while (i < config.nb_of_philo)
 	{
-		philos[i] = init_philo(i, &config, philos);
+		philos[i] = init_philo(i, &config);
 		if (!philos[i])
 		{
 			//free les philos
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 		}
 		++i;
 	}
-	set_left_forks(t_philosopher **philos);
+	set_left_forks(philos, config.nb_of_philo);
 	i = 0;
 	while (i < config.nb_of_philo)
 	{
