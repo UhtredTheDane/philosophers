@@ -52,6 +52,17 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < config.nb_of_philo)
 	{
+		if (pthread_create(&(philos[i]->thread), NULL, run_philo, philos[i]->data_philo) != 0)
+		{
+			//free_data();
+			free(philosopher);
+			printf("Erreur creation thread %ld", philosopher->data_philo->num);
+			return (NULL);
+		}
+	}
+	i = 0;
+	while (i < config.nb_of_philo)
+	{
 		pthread_join(philos[i]->thread, NULL);
 		++i;
 	}

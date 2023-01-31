@@ -13,13 +13,6 @@ t_philosopher *init_philo(int num_thread, t_config *config, t_philosopher **phil
 		free(philosopher);
 		return (NULL);
 	} 
-	if (pthread_create(&(philosopher->thread), NULL, run_philo, philosopher->data_philo) != 0)
-	{
-		//free_data();
-		free(philosopher);
-		printf("Erreur creation thread %ld", philosopher->data_philo->num);
-		return (NULL);
-	}
 	return (philosopher);
 }
 
@@ -108,7 +101,7 @@ int eat(t_data *data_philo, long base_time, long *start_life)
             	return (0);
 		}
 		--res;
-	}
+	} 
     pthread_mutex_unlock(&data_philo->right_fork);
 	if (data_philo->num == 0)
 		pthread_mutex_unlock(&data_philo->philos[data_philo->config.nb_of_philo - 1]->data_philo->right_fork);
