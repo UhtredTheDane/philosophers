@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/01/30 23:33:36 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:04:24 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	main(int argc, char **argv)
 		if (pthread_create(&(philos[i]->thread), NULL, run_philo, philos[i]->data_philo) != 0)
 		{
 			//free_data();
-			free(philosopher);
-			printf("Erreur creation thread %ld", philosopher->data_philo->num);
-			return (NULL);
+			printf("Erreur creation thread %d", i);
+			return (1);
 		}
+		++i;
 	}
 	i = 0;
 	while (i < config.nb_of_philo)
