@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
- 
+
 int	main(int argc, char **argv)
 {
 	int i;
@@ -21,35 +21,22 @@ int	main(int argc, char **argv)
 	
 	if (argc < 4 && argc > 7)
 	{
-		printf("Mauvais nombre d argument\n");
+		printf("Error\n");
 		return (1);
 	}
-	//verif a faire sur les entres
-	config.nb_of_philo = ft_atoi(argv[1]);
-	config.time_to_die = ft_atoi(argv[2]);
-	config.time_to_eat = ft_atoi(argv[3]);
-	config.time_to_sleep = ft_atoi(argv[4]);
-	config.anyone_died = malloc(sizeof(int));
-	if (!config.anyone_died)
-		return (1);
-	*config.anyone_died = 1;
-
+	if (!init_config(&config, &argv[1]))
+		return (2);
 	philos = malloc(sizeof(t_philosopher *) * config.nb_of_philo);
 	if (!philos)
-		return (2);
+		return (3);
 	i = 0;
-	if (pthread_mutex_init(&(check_if_dead), NULL) != 0)
-	{
-			printf("Error init mutex\n");
-			return (1);
-	}
-	config.base_time = get_mls_time();
 	while (i < config.nb_of_philo)
 	{
-		philos[i] = init_philo(i, &config, philos, check_if_dead);
+		philos[i] = init_philo(&config, philos, i);
 		if (!philos[i])
 		{
-			//free les philos
+			//free la config
+			//free les deja fait philos
 			free(philos);
 			return (3);
 		}

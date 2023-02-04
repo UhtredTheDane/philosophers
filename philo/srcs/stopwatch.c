@@ -17,3 +17,8 @@ long	get_mls_time()
 	gettimeofday(&present_time, NULL);
 	return (convert_s_in_ms(&(present_time.tv_sec)) + convert_us_in_ms(&(present_time.tv_usec)));
 }
+
+long get_time_since(long base_time)
+{
+	return (get_mls_time() - base_time);
+}
