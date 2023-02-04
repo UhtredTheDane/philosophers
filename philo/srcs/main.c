@@ -12,6 +12,60 @@
 
 #include "../includes/philosophers.h"
 
+int	prepare_philos(t_config *config)
+{
+	t_philosopher **philos;
+	int i;
+
+	philos = malloc(sizeof(t_philosopher *) * config->nb_of_philo);
+	if (!philos)
+		return (NULL);
+	i = 0;
+	while (i < config->nb_of_philo)
+	{
+		philos[i] = init_philo(config, philos, i);
+		if (!philos[i])
+		{
+			//free la config
+			//free les deja fait philos
+			free(philos);
+			return (NULL);
+		}
+		++i;
+	}
+	return (philos);
+}
+
+int run_philo(t_config *config, t_philosopher **philos)
+{
+	int i;
+
+	i = 0;
+	while (i < config->nb_of_philo)
+	{
+		if (pthread_create(&(philos[i]->thread), NULL, run_philo, philos[i]->data_philo) != 0)
+		{
+			//free_data();
+			printf("Erreur creation thread %d", i);
+			return (0);
+		}
+		++i;
+	}
+	return (1);
+}
+
+void wait_philo(t_config *config, t_philosopher **philos)
+{
+	int i;
+	
+	i = 0;
+	while (i < config->nb_of_philo)
+	{
+		pthread_join(philos[i]->thread, NULL);
+		++i;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	int i;
@@ -25,40 +79,11 @@ int	main(int argc, char **argv)
 	}
 	if (!init_config(&config, &argv[1]))
 		return (2);
-	
-    	pthread_mutex_init(&(config.check_if_dead), NULL);
-	philos = malloc(sizeof(t_philosopher *) * config.nb_of_philo);
+	philos = prepare_philos(&config);
 	if (!philos)
+		return (NULL);
+	if (!run_philo(config, philos))
 		return (3);
-	i = 0;
-	while (i < config.nb_of_philo)
-	{
-		philos[i] = init_philo(&config, philos, i);
-		if (!philos[i])
-		{
-			//free la config
-			//free les deja fait philos
-			free(philos);
-			return (3);
-		}
-		++i;
-	}
-	i = 0;
-	while (i < config.nb_of_philo)
-	{
-		if (pthread_create(&(philos[i]->thread), NULL, run_philo, philos[i]->data_philo) != 0)
-		{
-			//free_data();
-			printf("Erreur creation thread %d", i);
-			return (1);
-		}
-		++i;
-	}
-	i = 0;
-	while (i < config.nb_of_philo)
-	{
-		pthread_join(philos[i]->thread, NULL);
-		++i;
-	}
+	wait_philo(t_config *config, t_philosopher **philos);
 	return (0);
 }
