@@ -13,7 +13,7 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos, pthr
 			printf("Error init mutex %d\n", num_thread);
 			return (NULL);
 	}
-	data->check_if_dead = config->check_if_dead;
+	data->check_if_dead = check_if_dead;
 	data->philos = philos;
 	data->config.nb_of_philo = config->nb_of_philo;
 	data->config.time_to_die = config->time_to_die;
