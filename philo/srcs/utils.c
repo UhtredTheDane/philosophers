@@ -1,22 +1,9 @@
 #include "../includes/philosophers.h"
 
-/*
- *Description:
- *
- * Checks for a digit.
- */
-
 int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
-
-/* 
- * Description:
- * 
- * Converts the initial portion of the string pointed to nptr 
- * to int representation.
- */
 
 int	ft_isspace(int c)
 {
