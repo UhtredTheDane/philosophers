@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:16 by agengemb          #+#    #+#             */
-/*   Updated: 2023/01/30 18:42:17 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/04 09:41:16 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
   
@@ -36,7 +36,7 @@ long	get_mls_time();
 long convert_s_in_ms(time_t *s_nb);
 long convert_us_in_ms(suseconds_t *micro_nb);
 long get_time_since(long base_time);
-t_philosopher *init_philo(int num_thread, t_config *config, t_philosopher **philos);
+t_philosopher *init_philo(t_config *config, t_philosopher **philos, int num_thread);
 int is_anyone_dead(t_data *data_philo);
 int is_not_dead(t_data *data_philo, long timer, long start_life);
 int    think(t_data *data_philo, long *start_life);

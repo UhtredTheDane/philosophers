@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/03 22:04:24 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/04 09:41:32 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	main(int argc, char **argv)
 	int i;
 	t_philosopher **philos;
 	t_config config;
-	pthread_mutex_t check_if_dead;
 	
 	if (argc < 4 && argc > 7)
 	{

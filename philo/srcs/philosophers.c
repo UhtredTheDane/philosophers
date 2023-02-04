@@ -19,7 +19,7 @@ t_philosopher *init_philo(t_config *config, t_philosopher **philos, int num_thre
 int is_anyone_dead(t_data *data_philo)
 {
 	pthread_mutex_lock(&data_philo->config->check_if_dead);
-	if (*data_philo->config.anyone_died == 0)
+	if (*data_philo->config->anyone_died == 0)
 	{
 		pthread_mutex_unlock(&data_philo->config->check_if_dead);
 		return (1);
@@ -30,11 +30,11 @@ int is_anyone_dead(t_data *data_philo)
 
 int is_not_dead(t_data *data_philo, long timer, long start_life)
 {
-    if (timer > start_life + data_philo->config.time_to_die)
+    if (timer > start_life + data_philo->config->time_to_die)
 	{
 		printf("%ld %ld died\n", timer, data_philo->num);
 		pthread_mutex_lock(&data_philo->config->check_if_dead);
-		*data_philo->config.anyone_died = 0;
+		*data_philo->config->anyone_died = 0;
 		pthread_mutex_unlock(&data_philo->config->check_if_dead);
 	    return (0);
 	}
@@ -46,7 +46,7 @@ int    think(t_data *data_philo, long *start_life)
 	long timer;
 	int num;
 
-	timer = get_time_since(long base_time)
+	timer = get_time_since(data_philo->base_time);
 	if (is_anyone_dead(data_philo))
 		return (0);
 	printf("%ld %ld is thinking\n", timer, data_philo->num);
@@ -59,7 +59,7 @@ int    think(t_data *data_philo, long *start_life)
 	}
 	printf("%ld %ld has taken right fork\n", timer, data_philo->num);
 	if (data_philo->num == 0)
-		num = data_philo->config.nb_of_philo - 1;
+		num = data_philo->config->nb_of_philo - 1;
 	else
 		num = data_philo->num - 1;
 	pthread_mutex_lock(&data_philo->philos[num]->data_philo->right_fork);
@@ -82,8 +82,8 @@ int eat(t_data *data_philo, long *start_life, int num)
     long    rest;
 	long timer;
 
-	res = data_philo->config.time_to_eat / 5;
-	rest = data_philo->config.time_to_eat % 5;
+	res = data_philo->config->time_to_eat / 5;
+	rest = data_philo->config->time_to_eat % 5;
 	*start_life = get_mls_time() - data_philo->base_time;
 	if (is_anyone_dead(data_philo))
 	{
@@ -132,8 +132,8 @@ int    sleep_action(t_data *data_philo, long start_life)
     long    rest;
 	long timer;
 
-	res = data_philo->config.time_to_sleep / 5;
-	rest = data_philo->config.time_to_sleep % 5;
+	res = data_philo->config->time_to_sleep / 5;
+	rest = data_philo->config->time_to_sleep % 5;
 	if (is_anyone_dead(data_philo))
 		return (0);
 	timer = get_mls_time() - data_philo->base_time;

@@ -1,6 +1,6 @@
 #include "../includes/philosophers.h"
 
-t_data *init_data(int num_thread, t_config *config, t_philosopher **philos, pthread_mutex_t check_if_dead)
+t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 {
 	t_data *data;
 
@@ -13,7 +13,6 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos, pthr
 			printf("Error init mutex %d\n", num_thread);
 			return (NULL);
 	}
-	data->check_if_dead = check_if_dead;
 	data->philos = philos;
 	data->config = config;	
 	return (data);
