@@ -12,7 +12,6 @@ typedef struct s_data
     size_t num;
     t_philosopher **philos;
     pthread_mutex_t right_fork;
-    long base_time;
     t_config *config;
     
 } t_data;

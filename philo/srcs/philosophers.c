@@ -46,12 +46,12 @@ int    think(t_data *data_philo, long *start_life)
 	long timer;
 	int num;
 
-	timer = get_time_since(data_philo->base_time);
+	timer = get_time_since(data_philo->config->base_time);
 	if (is_anyone_dead(data_philo))
 		return (0);
 	printf("%ld %ld is thinking\n", timer, data_philo->num);
 	pthread_mutex_lock(&data_philo->right_fork);
-	timer = get_mls_time() - data_philo->base_time;
+	timer = get_time_since(data_philo->config->base_time);
 	if (is_anyone_dead(data_philo) || !is_not_dead(data_philo, timer, *start_life))
 	{
         pthread_mutex_unlock(&data_philo->right_fork);
@@ -63,7 +63,7 @@ int    think(t_data *data_philo, long *start_life)
 	else
 		num = data_philo->num - 1;
 	pthread_mutex_lock(&data_philo->philos[num]->data_philo->right_fork);
-	timer = get_mls_time() - data_philo->base_time;
+	timer = get_time_since(data_philo->config->base_time);
 	if (is_anyone_dead(data_philo) || !is_not_dead(data_philo, timer, *start_life))
 	{
 		pthread_mutex_unlock(&data_philo->right_fork);
@@ -84,7 +84,7 @@ int eat(t_data *data_philo, long *start_life, int num)
 
 	res = data_philo->config->time_to_eat / 5;
 	rest = data_philo->config->time_to_eat % 5;
-	*start_life = get_mls_time() - data_philo->base_time;
+	*start_life = get_time_since(data_philo->config->base_time);
 	if (is_anyone_dead(data_philo))
 	{
 		pthread_mutex_unlock(&data_philo->right_fork);
@@ -136,7 +136,7 @@ int    sleep_action(t_data *data_philo, long start_life)
 	rest = data_philo->config->time_to_sleep % 5;
 	if (is_anyone_dead(data_philo))
 		return (0);
-	timer = get_mls_time() - data_philo->base_time;
+	timer = get_time_since(data_philo->config->base_time);
 	printf("%ld %ld is sleeping\n", timer, data_philo->num);
 	while (res >= 0)
 	{
@@ -168,7 +168,6 @@ void	*run_philo(void *arg)
 	data_philo = (t_data *) arg;
 	start_life = 0;
 	is_alive = 1;
-	data_philo->base_time = get_mls_time();
 	while (is_alive)
 		if (!think(data_philo, &start_life))
 			return (NULL);

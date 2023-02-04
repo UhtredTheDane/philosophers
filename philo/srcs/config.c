@@ -16,5 +16,6 @@ int init_config(t_config *config, char **params)
 	if (!config->anyone_died)
 		return (0);
 	*config->anyone_died = 1;
+	config->base_time = get_mls_time();
 	return (1);
 }
