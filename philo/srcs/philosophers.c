@@ -159,7 +159,7 @@ int    sleep_action(t_data *data_philo, long start_life)
 	return (1);
 }
 
-void	*give_philo_life(void *arg)
+void	*philo_life(void *arg)
 {
 	t_data *data_philo;
 	long start_life;

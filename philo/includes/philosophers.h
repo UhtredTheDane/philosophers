@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:16 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/04 09:41:16 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:20:03 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
   
@@ -42,10 +42,10 @@ int is_not_dead(t_data *data_philo, long timer, long start_life);
 int    think(t_data *data_philo, long *start_life);
 int  eat(t_data *data_philo, long *start_life, int num);
 int    sleep_action(t_data *data_philo, long start_life);
-void	*give_philo_life(void *arg);
+void	*philo_life(void *arg);
 t_data *init_data(int num_thread, t_config *config, t_philosopher **philos);
 int init_config(t_config *config, char **params);
-int	prepare_philos(t_config *config);
+t_philosopher	**prepare_philos(t_config *config);
 int run_philo(t_config *config, t_philosopher **philos);
 void wait_philo(t_config *config, t_philosopher **philos);
 

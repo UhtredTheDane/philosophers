@@ -6,13 +6,13 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/04 10:08:27 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:19:41 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	prepare_philos(t_config *config)
+t_philosopher	**prepare_philos(t_config *config)
 {
 	t_philosopher **philos;
 	int i;
@@ -43,7 +43,7 @@ int run_philo(t_config *config, t_philosopher **philos)
 	i = 0;
 	while (i < config->nb_of_philo)
 	{
-		if (pthread_create(&(philos[i]->thread), NULL, run_philo, philos[i]->data_philo) != 0)
+		if (pthread_create(&(philos[i]->thread), NULL, philo_life, philos[i]->data_philo) != 0)
 		{
 			//free_data();
 			printf("Erreur creation thread %d", i);
@@ -68,7 +68,6 @@ void wait_philo(t_config *config, t_philosopher **philos)
 
 int	main(int argc, char **argv)
 {
-	int i;
 	t_philosopher **philos;
 	t_config config;
 	
@@ -81,9 +80,9 @@ int	main(int argc, char **argv)
 		return (2);
 	philos = prepare_philos(&config);
 	if (!philos)
-		return (NULL);
-	if (!run_philo(config, philos))
+		return (4);
+	if (!run_philo(&config, philos))
 		return (3);
-	wait_philo(t_config *config, t_philosopher **philos);
+	wait_philo(&config, philos);
 	return (0);
 }
