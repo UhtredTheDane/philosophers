@@ -17,7 +17,8 @@ int	main(int argc, char **argv)
 	int i;
 	t_philosopher **philos;
 	t_config config;
-
+	pthread_mutex_t check_if_dead;
+	
 	if (argc < 4 && argc > 7)
 	{
 		printf("Mauvais nombre d argument\n");
@@ -37,10 +38,15 @@ int	main(int argc, char **argv)
 	if (!philos)
 		return (2);
 	i = 0;
+	if (pthread_mutex_init(&(check_if_dead), NULL) != 0)
+	{
+			printf("Error init mutex %d\n", num_thread);
+			return (NULL);
+	}
 	config.base_time = get_mls_time();
 	while (i < config.nb_of_philo)
 	{
-		philos[i] = init_philo(i, &config, philos);
+		philos[i] = init_philo(i, &config, philos, check_if_dead);
 		if (!philos[i])
 		{
 			//free les philos
