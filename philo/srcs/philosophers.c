@@ -1,13 +1,13 @@
 #include "../includes/philosophers.h"
 
-t_philosopher *init_philo(int num_thread, t_config *config, t_philosopher **philos)
+t_philosopher *init_philo(int num_thread, t_config *config, t_philosopher **philos, pthread_mutex_t check_if_dead)
 {
 	t_philosopher *philosopher;
 
 	philosopher = malloc(sizeof(t_philosopher));
 	if (!philosopher)
 		return (NULL);
-	philosopher->data_philo = init_data(num_thread, config, philos);
+	philosopher->data_philo = init_data(num_thread, config, philos, check_if_dead);
 	if (!philosopher->data_philo)
 	{
 		free(philosopher);
