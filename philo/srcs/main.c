@@ -40,8 +40,8 @@ int	main(int argc, char **argv)
 	i = 0;
 	if (pthread_mutex_init(&(check_if_dead), NULL) != 0)
 	{
-			printf("Error init mutex %d\n", num_thread);
-			return (NULL);
+			printf("Error init mutex\n");
+			return (1);
 	}
 	config.base_time = get_mls_time();
 	while (i < config.nb_of_philo)
