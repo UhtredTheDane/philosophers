@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/04 09:41:32 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/04 10:08:27 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	main(int argc, char **argv)
 	}
 	if (!init_config(&config, &argv[1]))
 		return (2);
+	
+    	pthread_mutex_init(&(config.check_if_dead), NULL);
 	philos = malloc(sizeof(t_philosopher *) * config.nb_of_philo);
 	if (!philos)
 		return (3);
