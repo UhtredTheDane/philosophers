@@ -19,7 +19,7 @@ void	*run_mower(void *arg)
         while (i < nb_of_philo)
         {
             if (!is_not_dead(philos[i]->data_philo, timer))
-                alive = 0;
+                return (NULL);
 	    ++i;
         }
     }

@@ -36,7 +36,7 @@ int is_not_dead(t_data *data_philo, long timer)
 		pthread_mutex_lock(&data_philo->config->check_if_dead);
 		*data_philo->config->anyone_died = 0;
 		pthread_mutex_unlock(&data_philo->config->check_if_dead);
-	    	return (0);
+	    return (0);
 	}
     return (1);
 }

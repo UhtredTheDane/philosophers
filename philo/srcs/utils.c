@@ -1,11 +1,16 @@
 #include "../includes/philosophers.h"
 
-void print_log(t_data *data_philo, long timer, int type)
+int print_log(t_data *data_philo, long timer, int type)
 {
 	pthread_mutex_lock(&data_philo->config->acces_printer);
 	if (type == 0)
+	{
 		printf("%ld ms %ld died\n", timer, data_philo->num);
-	else if (type == 1)
+		return (1);
+	}
+	if (is_anyone_dead(data_philo))
+		return (0);
+	if (type == 1)
 		printf("%ld ms %ld is thinking\n", timer, data_philo->num);
 	else if (type == 2)
 		printf("%ld ms %ld has taken right fork\n", timer, data_philo->num);
@@ -13,9 +18,10 @@ void print_log(t_data *data_philo, long timer, int type)
 		printf("%ld ms %ld has taken left fork\n", timer, data_philo->num);
 	else if (type == 4)
 		printf("%ld ms %ld is eating\n", timer, data_philo->num);
-	else
+	else if (type == 5)
 		printf("%ld ms %ld is sleeping\n", timer, data_philo->num);
 	pthread_mutex_unlock(&data_philo->config->acces_printer);
+	return (1);
 }
 
 int	ft_isdigit(int c)

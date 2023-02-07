@@ -37,7 +37,8 @@ int    think_action(t_data *data_philo, int num_left_fork)
 	if (is_anyone_dead(data_philo))
 		return (0);
     	timer = get_time_since(data_philo->config->base_time);
-	print_log(data_philo, timer, 1);
+	if (!print_log(data_philo, timer, 1))
+		return (0);
 	pthread_mutex_lock(&data_philo->right_fork);
 	if (is_anyone_dead(data_philo))
 	{
@@ -45,7 +46,8 @@ int    think_action(t_data *data_philo, int num_left_fork)
 		return (0);
 	}
 	timer = get_time_since(data_philo->config->base_time);
-	print_log(data_philo, timer, 2);
+	if(!print_log(data_philo, timer, 2))
+		return (0);
 	pthread_mutex_lock(&data_philo->philos[num_left_fork]->data_philo->right_fork);
 	timer = get_time_since(data_philo->config->base_time);
 	if (is_anyone_dead(data_philo))
@@ -53,7 +55,8 @@ int    think_action(t_data *data_philo, int num_left_fork)
 		drop_forks(data_philo, num_left_fork);
         return (0);
 	}
-	print_log(data_philo, timer, 3);
+	if (!print_log(data_philo, timer, 3))
+		return (0);
 	if (!eat_action(data_philo, num_left_fork))
 			return (0);
 	return (1);
@@ -70,7 +73,8 @@ int eat_action(t_data *data_philo, int num_left_fork)
     }
 	data_philo->start_life = get_time_since(data_philo->config->base_time);
 	timer = data_philo->start_life;
-	print_log(data_philo, timer, 4);
+	if (!print_log(data_philo, timer, 4))
+		return (0);
     if (!ft_sleep(data_philo, timer, data_philo->config->time_to_eat))
 	{
 		drop_forks(data_philo, num_left_fork);
@@ -89,8 +93,8 @@ int    sleep_action(t_data *data_philo)
 	if (is_anyone_dead(data_philo))
 		return (0);
 	timer = get_time_since(data_philo->config->base_time);
-	print_log(data_philo, timer, 5);
-	printf("%ld ms %ld is sleeping\n", timer, data_philo->num);
+	if (!print_log(data_philo, timer, 5))
+		return (0);
 	if (!ft_sleep(data_philo, timer, data_philo->config->time_to_sleep))
         return (0);
 	return (1);
