@@ -23,21 +23,24 @@ int is_anyone_dead(t_data *data_philo)
 	{
 		pthread_mutex_unlock(&data_philo->config->check_if_dead);
 		return (1);
-	}
+	}   
 	pthread_mutex_unlock(&data_philo->config->check_if_dead);
 	return (0);
 }
 
 int is_not_dead(t_data *data_philo, long timer)
 {
+	pthread_mutex_lock(&data_philo->acces_life_timer);
 	if (timer > data_philo->start_life + data_philo->config->time_to_die)
 	{
-		print_log(data_philo, timer, 0);
+		pthread_mutex_unlock(&data_philo->acces_life_timer);
 		pthread_mutex_lock(&data_philo->config->check_if_dead);
 		*data_philo->config->anyone_died = 0;
 		pthread_mutex_unlock(&data_philo->config->check_if_dead);
+		print_log(data_philo, timer, 0);
 	    return (0);
 	}
+	pthread_mutex_unlock(&data_philo->acces_life_timer);
     return (1);
 }
  
@@ -52,11 +55,23 @@ void	*philo_life(void *arg)
 	if (num_left_fork == -1)
 		num_left_fork = data_philo->config->nb_of_philo - 1;
 	if (data_philo->num % 2)
-		usleep(1000);
+		usleep(2000);
 	is_alive = 1;
 	while (is_alive)
-		if (!think_action(data_philo, num_left_fork))
-			is_alive = 0;
+	{
+
+			if (!think_action(data_philo, num_left_fork))
+				return (NULL);
+
+	
+			if (!eat_action(data_philo, num_left_fork))
+				return (NULL);
+	
+		
+			if (!sleep_action(data_philo))
+			return (NULL);
+	
+	}
 
 	return (NULL);
 }

@@ -8,7 +8,12 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 	if (!data)
 		return (NULL);
 	data->num = num_thread;
-	if (pthread_mutex_init(&(data->right_fork), NULL) != 0)
+	if (pthread_mutex_init(&data->right_fork, NULL) != 0)
+	{
+			printf("Error init mutex %d\n", num_thread);
+			return (NULL);
+	}
+	if (pthread_mutex_init(&data->acces_life_timer, NULL) != 0)
 	{
 			printf("Error init mutex %d\n", num_thread);
 			return (NULL);

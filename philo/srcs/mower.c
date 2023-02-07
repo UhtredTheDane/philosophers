@@ -13,11 +13,11 @@ void	*run_mower(void *arg)
     nb_of_philo = philos[0]->data_philo->config->nb_of_philo;
     while (alive)
     { 
-        usleep(5000);
-	i = 0;
-        timer = get_time_since(philos[0]->data_philo->config->base_time);
+        usleep(2000);
+	    i = 0;
         while (i < nb_of_philo)
         {
+            timer = get_time_since(philos[i]->data_philo->config->base_time);
             if (!is_not_dead(philos[i]->data_philo, timer))
                 return (NULL);
 	    ++i;

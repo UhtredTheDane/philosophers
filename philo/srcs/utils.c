@@ -6,10 +6,14 @@ int print_log(t_data *data_philo, long timer, int type)
 	if (type == 0)
 	{
 		printf("%ld ms %ld died\n", timer, data_philo->num);
+		pthread_mutex_unlock(&data_philo->config->acces_printer);
 		return (1);
 	}
 	if (is_anyone_dead(data_philo))
+	{
+		pthread_mutex_unlock(&data_philo->config->acces_printer);
 		return (0);
+	}
 	if (type == 1)
 		printf("%ld ms %ld is thinking\n", timer, data_philo->num);
 	else if (type == 2)
