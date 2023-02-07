@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/04 12:19:41 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:39:59 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv)
 		return (4);
 	if (!run_philo(&config, philos))
 		return (3);
-	if (pthread_create(&mower), NULL, run_mower, philos) != 0)
+	if (pthread_create(&mower, NULL, run_mower, philos) != 0)
 	{
 			//free_data();
 			printf("Erreur creation thread mower");

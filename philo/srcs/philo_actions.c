@@ -89,7 +89,7 @@ int    sleep_action(t_data *data_philo)
 	if (is_anyone_dead(data_philo))
 		return (0);
 	timer = get_time_since(data_philo->config->base_time);
-	printf("%ld %ld is sleeping\n", timer, data_philo->num);
+	printf("%ld ms %ld is sleeping\n", timer, data_philo->num);
 	if (!ft_sleep(data_philo, timer, data_philo->config->time_to_sleep))
         return (0);
 	return (1);

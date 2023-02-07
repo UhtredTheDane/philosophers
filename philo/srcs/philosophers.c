@@ -30,13 +30,13 @@ int is_anyone_dead(t_data *data_philo)
 
 int is_not_dead(t_data *data_philo, long timer)
 {
-    if (timer > data_philo->start_life + data_philo->config->time_to_die)
+	if (timer > data_philo->start_life + data_philo->config->time_to_die)
 	{
 		printf("%ld ms %ld died\n", timer, data_philo->num);
 		pthread_mutex_lock(&data_philo->config->check_if_dead);
 		*data_philo->config->anyone_died = 0;
 		pthread_mutex_unlock(&data_philo->config->check_if_dead);
-	    return (0);
+	    	return (0);
 	}
     return (1);
 }
@@ -54,7 +54,7 @@ void	*philo_life(void *arg)
 	is_alive = 1;
 	while (is_alive)
 		if (!think_action(data_philo, num_left_fork))
-			return (NULL);
+			is_alive = 0;
 
 	return (NULL);
 }
