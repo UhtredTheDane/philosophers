@@ -21,7 +21,7 @@
 # include "config.h"
 # include <sys/time.h>
 # include <unistd.h>
-
+ 
 typedef struct s_philosopher
 {
     pthread_t thread;
@@ -51,4 +51,5 @@ void wait_philo(t_config *config, t_philosopher **philos);
 int ft_sleep(t_data *data_philo, long timer, long time_to_action);
 void drop_forks(t_data *data, int num);
 void	*run_mower(void *arg);
+void print_log(t_data *data_philo, long timer, int type);
 #endif

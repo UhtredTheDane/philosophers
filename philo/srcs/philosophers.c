@@ -15,7 +15,7 @@ t_philosopher *init_philo(t_config *config, t_philosopher **philos, int num_thre
 	} 
 	return (philosopher);
 }
-
+ 
 int is_anyone_dead(t_data *data_philo)
 {
 	pthread_mutex_lock(&data_philo->config->check_if_dead);
@@ -32,7 +32,7 @@ int is_not_dead(t_data *data_philo, long timer)
 {
 	if (timer > data_philo->start_life + data_philo->config->time_to_die)
 	{
-		printf("%ld ms %ld died\n", timer, data_philo->num);
+		print_log(data_philo, timer, 0);
 		pthread_mutex_lock(&data_philo->config->check_if_dead);
 		*data_philo->config->anyone_died = 0;
 		pthread_mutex_unlock(&data_philo->config->check_if_dead);

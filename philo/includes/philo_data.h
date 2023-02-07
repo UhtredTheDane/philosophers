@@ -6,6 +6,7 @@
 # include <stdlib.h>
 # include "config.h"
 # include "philosophers.h"
+
 typedef struct s_philosopher t_philosopher;
 typedef struct s_data
 { 
