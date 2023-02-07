@@ -8,10 +8,11 @@
 # include "philosophers.h"
 typedef struct s_philosopher t_philosopher;
 typedef struct s_data
-{
+{ 
     size_t num;
     t_philosopher **philos;
     pthread_mutex_t right_fork;
+    long start_life;
     t_config *config;
     
 } t_data;
