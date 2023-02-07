@@ -51,6 +51,8 @@ void	*philo_life(void *arg)
 	num_left_fork = data_philo->num % data_philo->config->nb_of_philo - 1;
 	if (num_left_fork == -1)
 		num_left_fork = data_philo->config->nb_of_philo - 1;
+	if (data_philo->num % 2)
+		usleep(1000);
 	is_alive = 1;
 	while (is_alive)
 		if (!think_action(data_philo, num_left_fork))

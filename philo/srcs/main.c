@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/07 12:39:59 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:34:21 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int argc, char **argv)
 	philos = prepare_philos(&config);
 	if (!philos)
 		return (4);
+	config.base_time = get_mls_time();
 	if (!run_philo(&config, philos))
 		return (3);
 	if (pthread_create(&mower, NULL, run_mower, philos) != 0)

@@ -36,7 +36,7 @@ int    think_action(t_data *data_philo, int num_left_fork)
 
 	if (is_anyone_dead(data_philo))
 		return (0);
-    timer = get_time_since(data_philo->config->base_time);
+    	timer = get_time_since(data_philo->config->base_time);
 	print_log(data_philo, timer, 1);
 	pthread_mutex_lock(&data_philo->right_fork);
 	if (is_anyone_dead(data_philo))
