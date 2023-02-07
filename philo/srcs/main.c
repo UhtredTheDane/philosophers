@@ -70,6 +70,7 @@ int	main(int argc, char **argv)
 {
 	t_philosopher **philos;
 	t_config config;
+	pthread_t mower;
 	
 	if (argc < 4 && argc > 7)
 	{
@@ -83,6 +84,12 @@ int	main(int argc, char **argv)
 		return (4);
 	if (!run_philo(&config, philos))
 		return (3);
+	if (pthread_create(&mower), NULL, run_mower, philos) != 0)
+	{
+			//free_data();
+			printf("Erreur creation thread mower");
+			return (0);
+	}
 	wait_philo(&config, philos);
 	return (0);
 }
