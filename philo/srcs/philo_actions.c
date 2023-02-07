@@ -1,31 +1,11 @@
 
 #include "../includes/philosophers.h"
 
-int ft_sleep(t_data *data_philo, long timer, long time_to_action)
+int ft_sleep(long time_to_action)
 {
-    long    res;
-    long    rest;
 
-    res = time_to_action / 5;
-	rest = data_philo->config->time_to_eat % 5;
-    while (res >= 0)
-	{
-		if (res)
-		{
-			usleep(5 * 1000);
-			timer += 5;
-			if (is_anyone_dead(data_philo))
-            	return (0);
-		}
-		else
-		{
-			usleep(rest * 1000);
-			timer += rest;
-			if (is_anyone_dead(data_philo))
-				return (0);
-		}
-		--res;
-	}
+
+    usleep(time_to_action * 1000);
     return (1);
 }
 
@@ -84,7 +64,7 @@ int eat_action(t_data *data_philo, int num_left_fork)
 		drop_forks(data_philo, num_left_fork);
 		return (0);
 	}
-    if (!ft_sleep(data_philo, timer, data_philo->config->time_to_eat))
+    if (!ft_sleep(data_philo->config->time_to_eat))
 	{
 		drop_forks(data_philo, num_left_fork);
 		return (0);
@@ -100,7 +80,7 @@ int    sleep_action(t_data *data_philo)
 	timer = get_time_since(data_philo->config->base_time);
 	if (!print_log(data_philo, timer, 5))
 		return (0);
-	if (!ft_sleep(data_philo, timer, data_philo->config->time_to_sleep))
+	if (!ft_sleep(data_philo->config->time_to_sleep))
         return (0);
 	return (1);
 }

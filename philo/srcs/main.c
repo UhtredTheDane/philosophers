@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/07 13:34:21 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:07:28 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_philosopher	**prepare_philos(t_config *config)
 {
-	t_philosopher **philos;
-	int i;
+	int			i;
+	t_philosopher	**philos;
 
 	philos = malloc(sizeof(t_philosopher *) * config->nb_of_philo);
 	if (!philos)
@@ -26,8 +26,12 @@ t_philosopher	**prepare_philos(t_config *config)
 		philos[i] = init_philo(config, philos, i);
 		if (!philos[i])
 		{
-			//free la config
-			//free les deja fait philos
+			/*while (i >= 0)
+			{
+
+				--i;
+			}*/
+			free_config(config);
 			free(philos);
 			return (NULL);
 		}
@@ -74,7 +78,7 @@ int	main(int argc, char **argv)
 	
 	if (argc < 4 && argc > 7)
 	{
-		printf("Error\n");
+		printf("Error, usage: ./philo nb_of_philosophers time_to_die time_to_eat time_to_sleep [nb_of_times_each_philosopher_must_eat]\n");
 		return (1);
 	}
 	if (!init_config(&config, &argv[1]))
@@ -84,12 +88,14 @@ int	main(int argc, char **argv)
 		return (4);
 	config.base_time = get_mls_time();
 	if (!run_philo(&config, philos))
+	{
 		return (3);
+	}
 	if (pthread_create(&mower, NULL, run_mower, philos) != 0)
 	{
-			//free_data();
-			printf("Erreur creation thread mower");
-			return (0);
+		//free_data();
+		printf("Erreur creation thread mower");
+		return (0);
 	}
 	wait_philo(&config, philos);
 	return (0);

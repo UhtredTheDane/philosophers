@@ -48,8 +48,11 @@ int init_config(t_config *config, char **params);
 t_philosopher	**prepare_philos(t_config *config);
 int run_philo(t_config *config, t_philosopher **philos);
 void wait_philo(t_config *config, t_philosopher **philos);
-int ft_sleep(t_data *data_philo, long timer, long time_to_action);
+int ft_sleep(long time_to_action);
 void drop_forks(t_data *data, int num);
 void	*run_mower(void *arg);
 int print_log(t_data *data_philo, long timer, int type);
+void free_config(t_config *config);
+void	free_data(t_data *data);
+void free_philo(t_philosopher *philo);
 #endif

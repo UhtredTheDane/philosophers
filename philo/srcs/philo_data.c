@@ -11,10 +11,13 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 	if (pthread_mutex_init(&data->right_fork, NULL) != 0)
 	{
 			printf("Error init mutex %d\n", num_thread);
+			free(data);
 			return (NULL);
 	}
 	if (pthread_mutex_init(&data->acces_life_timer, NULL) != 0)
 	{
+			pthread_mutex_destroy(&data->right_fork);
+			free(data);
 			printf("Error init mutex %d\n", num_thread);
 			return (NULL);
 	}
@@ -24,9 +27,9 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 	return (data);
 }
 
-/*
 void	free_data(t_data *data)
 {
-	
-	//pthread_mutex_destroy(pthread_mutex_t *mutex);
-}*/
+	pthread_mutex_destroy(&data->right_fork);
+	pthread_mutex_destroy(&data->acces_life_timer);
+	free(data);
+}

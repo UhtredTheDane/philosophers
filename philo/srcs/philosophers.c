@@ -1,5 +1,5 @@
 #include "../includes/philosophers.h"
-
+ 
 t_philosopher *init_philo(t_config *config, t_philosopher **philos, int num_thread)
 {
 	t_philosopher *philosopher;
@@ -38,12 +38,12 @@ int is_not_dead(t_data *data_philo, long timer)
 		*data_philo->config->anyone_died = 0;
 		pthread_mutex_unlock(&data_philo->config->check_if_dead);
 		print_log(data_philo, timer, 0);
-	    return (0);
+		return (0);
 	}
 	pthread_mutex_unlock(&data_philo->acces_life_timer);
     return (1);
 }
- 
+
 void	*philo_life(void *arg)
 {
 	t_data *data_philo;
@@ -54,24 +54,21 @@ void	*philo_life(void *arg)
 	num_left_fork = data_philo->num % data_philo->config->nb_of_philo - 1;
 	if (num_left_fork == -1)
 		num_left_fork = data_philo->config->nb_of_philo - 1;
-	if (data_philo->num % 2)
-		usleep(2000);
 	is_alive = 1;
 	while (is_alive)
 	{
-
 			if (!think_action(data_philo, num_left_fork))
 				return (NULL);
-
-	
 			if (!eat_action(data_philo, num_left_fork))
 				return (NULL);
-	
-		
 			if (!sleep_action(data_philo))
 			return (NULL);
 	
 	}
-
 	return (NULL);
+}
+
+void free_philo(t_philosopher *philo)
+{
+	free_data(philo->data_philo);
 }
