@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:16 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/04 12:20:03 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:22:53 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
   
@@ -44,7 +44,7 @@ int eat_action(t_data *data_philo, int num_left_fork);
 int    sleep_action(t_data *data_philo);
 void	*philo_life(void *arg);
 t_data *init_data(int num_thread, t_config *config, t_philosopher **philos);
-int init_config(t_config *config, char **params);
+int init_config(t_config *config, int nb_params, char **params);
 t_philosopher	**prepare_philos(t_config *config);
 int run_philo(t_config *config, t_philosopher **philos);
 void wait_philo(t_config *config, t_philosopher **philos);
@@ -55,6 +55,6 @@ int print_log(t_data *data_philo, long timer, int type);
 void free_config(t_config *config);
 void	free_data(t_data *data);
 void free_philo(t_philosopher *philo);
-int is_satisfied(int nb_to_eat, int nb_eat);
-int is_all_satisfied(int all_satisfied)
+int is_satisfied(t_data *data_philo);
+int is_all_satisfied(t_data *data_philo, int all_satisfied);
 #endif
