@@ -8,6 +8,7 @@ typedef struct s_config
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
+	int nb_to_eat;
 	int *anyone_died;
 	long base_time;
 	pthread_mutex_t check_if_dead;

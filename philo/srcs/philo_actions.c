@@ -58,6 +58,7 @@ int eat_action(t_data *data_philo, int num_left_fork)
 	pthread_mutex_lock(&data_philo->acces_life_timer);
 	data_philo->start_life = get_time_since(data_philo->config->base_time);
 	timer = data_philo->start_life;
+	++data_philo->nb_eat;
 	pthread_mutex_unlock(&data_philo->acces_life_timer);
 	if (!print_log(data_philo, timer, 4))
 	{	

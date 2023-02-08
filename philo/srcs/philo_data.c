@@ -22,6 +22,7 @@ t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 			return (NULL);
 	}
 	data->start_life = 0;
+	data->nb_eat = 0;
 	data->philos = philos;
 	data->config = config;	
 	return (data);

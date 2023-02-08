@@ -15,7 +15,7 @@ t_philosopher *init_philo(t_config *config, t_philosopher **philos, int num_thre
 	} 
 	return (philosopher);
 }
- 
+  
 int is_anyone_dead(t_data *data_philo)
 {
 	pthread_mutex_lock(&data_philo->config->check_if_dead);

@@ -15,6 +15,7 @@ typedef struct s_data
     pthread_mutex_t right_fork;
     pthread_mutex_t acces_life_timer;
     long start_life;
+    long nb_eat;
     t_config *config;
     
 } t_data;

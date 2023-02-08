@@ -55,4 +55,6 @@ int print_log(t_data *data_philo, long timer, int type);
 void free_config(t_config *config);
 void	free_data(t_data *data);
 void free_philo(t_philosopher *philo);
+int is_satisfied(int nb_to_eat, int nb_eat);
+int is_all_satisfied(int all_satisfied)
 #endif

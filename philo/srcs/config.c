@@ -13,12 +13,15 @@
 #include "../includes/philosophers.h"
 
 //verif a faire sur les entres
-int	init_config(t_config *config, char **params)
+int	init_config(t_config *config, int nb_params, char **params)
 {
 	config->nb_of_philo = ft_atoi(params[0]);
 	config->time_to_die = ft_atoi(params[1]);
 	config->time_to_eat = ft_atoi(params[2]);
 	config->time_to_sleep = ft_atoi(params[3]);
+	config->nb_to_eat = 0;
+	if (nb_params == 5)
+		config->nb_to_eat = ft_atoi(params[4]);
 	if (pthread_mutex_init(&config->check_if_dead, NULL) != 0)
 	{
 		printf("Error init mutex\n");

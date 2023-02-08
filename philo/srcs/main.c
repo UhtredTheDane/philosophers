@@ -76,12 +76,12 @@ int	main(int argc, char **argv)
 	t_config config;
 	pthread_t mower;
 	
-	if (argc < 4 && argc > 7)
+	if (argc < 5 && argc > 6)
 	{
 		printf("Error, usage: ./philo nb_of_philosophers time_to_die time_to_eat time_to_sleep [nb_of_times_each_philosopher_must_eat]\n");
 		return (1);
 	}
-	if (!init_config(&config, &argv[1]))
+	if (!init_config(&config, argc - 1, &argv[1]))
 		return (2);
 	philos = prepare_philos(&config);
 	if (!philos)
