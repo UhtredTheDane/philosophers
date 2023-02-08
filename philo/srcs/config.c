@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:03:43 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/08 16:58:33 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:03:14 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	init_config(t_config *config, int nb_params, char **params)
 	return (1);
 }
 
-void free_config(t_config *config)
+void	free_config(t_config *config)
 {
 	pthread_mutex_destroy(&config->check_if_dead);
 	pthread_mutex_destroy(&config->acces_printer);
