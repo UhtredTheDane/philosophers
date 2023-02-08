@@ -22,6 +22,22 @@ int is_all_satisfied(t_data *data_philo, int all_satisfied)
     return (0);
 }
 
+int is_not_dead(t_data *data_philo, long timer)
+{
+	pthread_mutex_lock(&data_philo->acces_life_timer);
+	if (timer > data_philo->start_life + data_philo->config->time_to_die)
+	{
+		pthread_mutex_unlock(&data_philo->acces_life_timer);
+		pthread_mutex_lock(&data_philo->config->check_if_dead);
+		*data_philo->config->anyone_died = 0;
+		pthread_mutex_unlock(&data_philo->config->check_if_dead);
+		print_log(data_philo, timer, 0);
+		return (0);
+	}
+	pthread_mutex_unlock(&data_philo->acces_life_timer);
+    return (1);
+}
+
 void	*run_mower(void *arg)
 {
     t_philosopher **philos;
@@ -38,7 +54,7 @@ void	*run_mower(void *arg)
     { 
         usleep(2000);
 	    i = 0;
-        all_satisfied = 1;
+        all_satisfied =  philos[0]->data_philo->config->nb_to_eat;
         while (i < nb_of_philo)
         {
             timer = get_time_since(philos[i]->data_philo->config->base_time);

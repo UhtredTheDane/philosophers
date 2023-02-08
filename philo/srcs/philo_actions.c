@@ -1,15 +1,6 @@
 
 #include "../includes/philosophers.h"
 
-int ft_sleep(long time_to_action)
-{
-
-
-    usleep(time_to_action * 1000);
-    return (1);
-}
-
-
 int    think_action(t_data *data_philo, int num_left_fork)
 {
 	long timer;
@@ -65,11 +56,7 @@ int eat_action(t_data *data_philo, int num_left_fork)
 		drop_forks(data_philo, num_left_fork);
 		return (0);
 	}
-    if (!ft_sleep(data_philo->config->time_to_eat))
-	{
-		drop_forks(data_philo, num_left_fork);
-		return (0);
-	}
+   	usleep(data_philo->config->time_to_eat * 1000);
 	drop_forks(data_philo, num_left_fork);
 	return (1);
 }
@@ -81,7 +68,6 @@ int    sleep_action(t_data *data_philo)
 	timer = get_time_since(data_philo->config->base_time);
 	if (!print_log(data_philo, timer, 5))
 		return (0);
-	if (!ft_sleep(data_philo->config->time_to_sleep))
-        return (0);
+	usleep(data_philo->config->time_to_sleep * 1000);
 	return (1);
 }

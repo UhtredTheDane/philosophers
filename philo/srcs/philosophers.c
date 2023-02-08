@@ -28,22 +28,6 @@ int is_anyone_dead(t_data *data_philo)
 	return (0);
 }
 
-int is_not_dead(t_data *data_philo, long timer)
-{
-	pthread_mutex_lock(&data_philo->acces_life_timer);
-	if (timer > data_philo->start_life + data_philo->config->time_to_die)
-	{
-		pthread_mutex_unlock(&data_philo->acces_life_timer);
-		pthread_mutex_lock(&data_philo->config->check_if_dead);
-		*data_philo->config->anyone_died = 0;
-		pthread_mutex_unlock(&data_philo->config->check_if_dead);
-		print_log(data_philo, timer, 0);
-		return (0);
-	}
-	pthread_mutex_unlock(&data_philo->acces_life_timer);
-    return (1);
-}
-
 void	*philo_life(void *arg)
 {
 	t_data *data_philo;
