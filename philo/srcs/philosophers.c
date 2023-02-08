@@ -47,7 +47,6 @@ void	*philo_life(void *arg)
 				return (NULL);
 			if (!sleep_action(data_philo))
 			return (NULL);
-	
 	}
 	return (NULL);
 }

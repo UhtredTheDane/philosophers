@@ -38,14 +38,31 @@ int is_not_dead(t_data *data_philo, long timer)
     return (1);
 }
 
-void	*run_mower(void *arg)
+int check_death(t_philosopher **philos, int all_satisfied)
 {
-    t_philosopher **philos;
-    int alive;
     int i;
     int nb_of_philo;
     int timer;
-    int all_satisfied;
+   
+    i = 0;
+    while (i < nb_of_philo)
+    {
+        timer = get_time_since(philos[i]->data_philo->config->base_time);
+        if (!is_not_dead(philos[i]->data_philo, timer))
+            return (0);
+        if (all_satisfied)
+            all_satisfied = is_satisfied(philos[i]->data_philo);
+        ++i;
+    }
+    if (is_all_satisfied(philos[0]->data_philo, all_satisfied))
+        return (0);
+    return (1);
+}
+
+void	*run_reaper(void *arg)
+{
+    t_philosopher **philos;
+    int alive;
 
     philos = (t_philosopher **) arg;
     alive = 1;
@@ -53,18 +70,7 @@ void	*run_mower(void *arg)
     while (alive)
     { 
         usleep(2000);
-	    i = 0;
-        all_satisfied =  philos[0]->data_philo->config->nb_to_eat;
-        while (i < nb_of_philo)
-        {
-            timer = get_time_since(philos[i]->data_philo->config->base_time);
-            if (!is_not_dead(philos[i]->data_philo, timer))
-                return (NULL);
-            if (all_satisfied)
-                all_satisfied = is_satisfied(philos[i]->data_philo);
-        ++i;
-        }
-        if (is_all_satisfied(philos[0]->data_philo, all_satisfied))
+	    if (!check_death(philos, philos[0]->data_philo->config->nb_to_eat))
             alive = 0;
     }
     return (NULL);

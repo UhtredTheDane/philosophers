@@ -50,7 +50,7 @@ int run_philo(t_config *config, t_philosopher **philos);
 void wait_philo(t_config *config, t_philosopher **philos);
 int ft_sleep(long time_to_action);
 void drop_forks(t_data *data, int num);
-void	*run_mower(void *arg);
+void	*run_reaper(void *arg);
 int print_log(t_data *data_philo, long timer, int type);
 void free_config(t_config *config);
 void	free_data(t_data *data);
