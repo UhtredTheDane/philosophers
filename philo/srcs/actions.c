@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:21:42 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/09 18:39:48 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/10 00:52:53 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void drop_forks(t_data *data, int num_fork)
 {
     pthread_mutex_unlock(&data->fork);
-	pthread_mutex_unlock(&data->philos[num]->data->fork);
+	pthread_mutex_unlock(&data->philos[num_fork]->data->fork);
 }
 
 int    think_action(t_data *data, int num_fork)
@@ -48,7 +48,7 @@ int    think_action(t_data *data, int num_fork)
 	timer = get_time_since(data->config->base_time);
 	if (!print_log(data, timer, 3))
 	{
-		drop_forks(data, num__fork);
+		drop_forks(data, num_fork);
 		return (0);
 	}
 	return (1);

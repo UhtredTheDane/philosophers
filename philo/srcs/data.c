@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:05:45 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/09 17:06:19 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/10 00:54:03 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_data_mutex(t_data *data)
 {
-	if (pthread_mutex_init(&data->right_fork, NULL) != 0)
+	if (pthread_mutex_init(&data->fork, NULL) != 0)
 	{
 		printf("Error init mutex %ld\n", data->num);
 		free(data);
@@ -23,7 +23,7 @@ int	init_data_mutex(t_data *data)
 	if (pthread_mutex_init(&data->acces_life_timer, NULL) != 0)
 	{
 		printf("Error init mutex %ld\n", data->num);
-		pthread_mutex_destroy(&data->right_fork);
+		pthread_mutex_destroy(&data->fork);
 		free(data);
 		return (0);
 	}
@@ -52,7 +52,7 @@ t_data	*init_data(int num_thread, t_config *config, t_philosopher **philos)
 
 void	free_data(t_data *data)
 {
-	pthread_mutex_destroy(&data->right_fork);
+	pthread_mutex_destroy(&data->fork);
 	pthread_mutex_destroy(&data->acces_life_timer);
 	free(data);
 }
