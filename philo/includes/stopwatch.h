@@ -1,6 +1,7 @@
 #ifndef STOPWATCH_H
 # define STOPWATCH_H
 
+# include <stddef.h>
 # include <sys/time.h>
 
 long convert_us_in_ms(suseconds_t *micro_nb);

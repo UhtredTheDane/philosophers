@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:16 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/08 16:22:53 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:31:14 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
   
@@ -19,42 +19,21 @@
 # include <stddef.h>
 # include "data.h"
 # include "config.h"
+# include "actions.h"
 # include <sys/time.h>
 # include <unistd.h>
- 
+
+typedef struct s_config	t_config;
+typedef struct s_data	t_data;
 typedef struct s_philosopher
 {
     pthread_t thread;
-    t_data *data_philo;
+    t_data *data;
 }   t_philosopher;
 
-
-int	ft_isdigit(int c);
-int	ft_isspace(int c);
-int	ft_atoi(const char *nptr);
-long	get_mls_time();
-long convert_s_in_ms(time_t *s_nb);
-long convert_us_in_ms(suseconds_t *micro_nb);
-long get_time_since(long base_time);
-t_philosopher *init_philo(t_config *config, t_philosopher **philos, int num_thread);
-int is_anyone_dead(t_data *data_philo);
-int is_not_dead(t_data *data_philo, long timer);
-int    think_action(t_data *data_philo, int num_left_fork);
-int eat_action(t_data *data_philo, int num_left_fork);
-int    sleep_action(t_data *data_philo);
+t_philosopher	*init_philo(t_config *config, t_philosopher **philos, int num);
+int	is_anyone_dead(t_data *data);
 void	*philo_life(void *arg);
-t_data *init_data(int num_thread, t_config *config, t_philosopher **philos);
-int init_config(t_config *config, int nb_params, char **params);
-t_philosopher	**prepare_philos(t_config *config);
-int run_philo(t_config *config, t_philosopher **philos);
-void wait_philo(t_config *config, t_philosopher **philos);
-int ft_sleep(long time_to_action);
-void drop_forks(t_data *data, int num);
-void	*run_reaper(void *arg);
-int print_log(t_data *data_philo, long timer, int type);
-void free_config(t_config *config);
-void	free_data(t_data *data);
-void free_philo(t_philosopher *philo);
-int is_satisfied(t_data *data_philo);
-int is_all_satisfied(t_data *data_philo, int all_satisfied);
+void	free_philo(t_philosopher *philo);
+void	free_philo_set(t_philosopher **philos, int i);
 #endif

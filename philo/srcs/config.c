@@ -6,11 +6,11 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:03:43 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/08 17:03:14 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:04:33 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../includes/config.h"
 
 int	init_config_mutex(t_config *config)
 {
@@ -42,14 +42,22 @@ int	init_config(t_config *config, int nb_params, char **params)
 		return (0);
 	config->anyone_died = malloc(sizeof(int));
 	if (!config->anyone_died)
+	{
+		destroy_mutex_config(config);
 		return (0);
+	}
 	*config->anyone_died = 1;
 	return (1);
 }
 
-void	free_config(t_config *config)
+void	destroy_mutex_config(t_config *config)
 {
 	pthread_mutex_destroy(&config->check_if_dead);
 	pthread_mutex_destroy(&config->acces_printer);
+}
+
+void	free_config(t_config *config)
+{
+	destroy_mutex_config(config);
 	free(config->anyone_died);
 }

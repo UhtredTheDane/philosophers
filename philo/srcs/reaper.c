@@ -1,77 +1,89 @@
-#include "../includes/philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reaper.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/09 16:53:22 by agengemb          #+#    #+#             */
+/*   Updated: 2023/02/09 17:33:35 by agengemb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int is_satisfied(t_data *data_philo)
+#include "../includes/reaper.h"
+
+int	is_satisfied(t_data *data)
 {
-    int res;
+	int	res;
 
-    pthread_mutex_lock(&data_philo->acces_life_timer);
-    res = data_philo->config->nb_to_eat == data_philo->nb_eat;
-    pthread_mutex_unlock(&data_philo->acces_life_timer);
-    return (res);
+	pthread_mutex_lock(&data->acces_life_timer);
+	res = data->config->nb_to_eat == data->nb_eat;
+	pthread_mutex_unlock(&data->acces_life_timer);
+	return (res);
 }
 
-int is_all_satisfied(t_data *data_philo, int all_satisfied)
+int	is_all_satisfied(t_data *data, int all_satisfied)
 {
-    if (all_satisfied)
+	if (all_satisfied)
 	{
-		pthread_mutex_lock(&data_philo->config->check_if_dead);
-		*data_philo->config->anyone_died = 0;
-		pthread_mutex_unlock(&data_philo->config->check_if_dead);
+		pthread_mutex_lock(&data->config->check_if_dead);
+		*data->config->anyone_died = 0;
+		pthread_mutex_unlock(&data->config->check_if_dead);
 		return (1);
 	}
-    return (0);
+	return (0);
 }
 
-int is_not_dead(t_data *data_philo, long timer)
+int	is_not_dead(t_data *data, long timer)
 {
-	pthread_mutex_lock(&data_philo->acces_life_timer);
-	if (timer > data_philo->start_life + data_philo->config->time_to_die)
+	pthread_mutex_lock(&data->acces_life_timer);
+	if (timer > data->start_life + data->config->time_to_die)
 	{
-		pthread_mutex_unlock(&data_philo->acces_life_timer);
-		pthread_mutex_lock(&data_philo->config->check_if_dead);
-		*data_philo->config->anyone_died = 0;
-		pthread_mutex_unlock(&data_philo->config->check_if_dead);
-		print_log(data_philo, timer, 0);
+		pthread_mutex_unlock(&data->acces_life_timer);
+		pthread_mutex_lock(&data->config->check_if_dead);
+		*data->config->anyone_died = 0;
+		pthread_mutex_unlock(&data->config->check_if_dead);
+		print_log(data, timer, 0);
 		return (0);
 	}
-	pthread_mutex_unlock(&data_philo->acces_life_timer);
-    return (1);
+	pthread_mutex_unlock(&data->acces_life_timer);
+	return (1);
 }
 
-int check_death(t_philosopher **philos, int all_satisfied)
+int	check_death(t_philosopher **philos, int all_satisfied)
 {
-    int i;
-    int nb_of_philo;
-    int timer;
-   
-    i = 0;
-    while (i < nb_of_philo)
-    {
-        timer = get_time_since(philos[i]->data_philo->config->base_time);
-        if (!is_not_dead(philos[i]->data_philo, timer))
-            return (0);
-        if (all_satisfied)
-            all_satisfied = is_satisfied(philos[i]->data_philo);
-        ++i;
-    }
-    if (is_all_satisfied(philos[0]->data_philo, all_satisfied))
-        return (0);
-    return (1);
+	int	i;
+	int	nb_of_philo;
+	int	timer;
+
+	i = 0;
+	nb_of_philo = philos[0]->data->config->nb_of_philo;
+	while (i < nb_of_philo)
+	{
+		timer = get_time_since(philos[i]->data->config->base_time);
+		if (!is_not_dead(philos[i]->data, timer))
+			return (0);
+		if (all_satisfied)
+			all_satisfied = is_satisfied(philos[i]->data);
+		++i;
+	}
+	if (is_all_satisfied(philos[0]->data, all_satisfied))
+		return (0);
+	return (1);
 }
 
-void	*run_reaper(void *arg)
+void	*reaper_life(void *arg)
 {
-    t_philosopher **philos;
-    int alive;
+	t_philosopher	**philos;
+	int				alive;
 
-    philos = (t_philosopher **) arg;
-    alive = 1;
-    nb_of_philo = philos[0]->data_philo->config->nb_of_philo;
-    while (alive)
-    { 
-        usleep(2000);
-	    if (!check_death(philos, philos[0]->data_philo->config->nb_to_eat))
-            alive = 0;
-    }
-    return (NULL);
+	philos = (t_philosopher **) arg;
+	alive = 1;
+	while (alive)
+	{
+		usleep(2000);
+		if (!check_death(philos, philos[0]->data->config->nb_to_eat))
+			alive = 0;
+	}
+	return (NULL);
 }

@@ -1,12 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reaper.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/09 16:59:16 by agengemb          #+#    #+#             */
+/*   Updated: 2023/02/09 18:03:36 by agengemb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef REAPER_H
 # define REAPER_H
 
 # include <pthread.h>
-# include "philo_data.h"
+# include <unistd.h>
+# include "data.h"
+# include "philosophers.h"
+# include "stopwatch.h"
+# include "main.h"
 
-int is_satisfied(t_data *data_philo);
-int is_all_satisfied(t_data *data_philo, int all_satisfied);
-int is_not_dead(t_data *data_philo, long timer);
-int check_death(t_philosopher **philos, int all_satisfied);
-void	*run_reaper(void *arg);
+typedef struct s_data	t_data;
+typedef struct s_philosopher	t_philosopher;
+
+void	*reaper_life(void *arg);
+int		is_satisfied(t_data *data);
+int		is_all_satisfied(t_data *data, int all_satisfied);
+int		is_not_dead(t_data *data, long timer);
+int		check_death(t_philosopher **philos, int all_satisfied);
 #endif

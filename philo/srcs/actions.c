@@ -1,73 +1,74 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/09 17:21:42 by agengemb          #+#    #+#             */
+/*   Updated: 2023/02/09 18:39:48 by agengemb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../includes/philosophers.h"
 
-int    think_action(t_data *data_philo, int num_left_fork)
+#include "../includes/actions.h"
+
+void drop_forks(t_data *data, int num)
+{
+    pthread_mutex_unlock(&data->right_fork);
+	pthread_mutex_unlock(&data->philos[num]->data->right_fork);
+}
+
+int    think_action(t_data *data, int num_left_fork)
 {
 	long timer;
 
-	if (is_anyone_dead(data_philo))
+	timer = get_time_since(data->config->base_time);
+	if (!print_log(data, timer, 1))
 		return (0);
-    	timer = get_time_since(data_philo->config->base_time);
-	if (!print_log(data_philo, timer, 1))
-		return (0);
-	pthread_mutex_lock(&data_philo->right_fork);
-	if (is_anyone_dead(data_philo))
+	pthread_mutex_lock(&data->right_fork);
+	timer = get_time_since(data->config->base_time);
+	if(!print_log(data, timer, 2))
 	{
-		pthread_mutex_unlock(&data_philo->right_fork);
-		return (0);
-	}
-	timer = get_time_since(data_philo->config->base_time);
-	if(!print_log(data_philo, timer, 2))
-	{
-		pthread_mutex_unlock(&data_philo->right_fork);
+		pthread_mutex_unlock(&data->right_fork);
 		return (0);
 	}
-	pthread_mutex_lock(&data_philo->philos[num_left_fork]->data_philo->right_fork);
-	if (is_anyone_dead(data_philo))
+	pthread_mutex_lock(&data->philos[num_left_fork]->data->right_fork);
+	timer = get_time_since(data->config->base_time);
+	if (!print_log(data, timer, 3))
 	{
-		drop_forks(data_philo, num_left_fork);
-        return (0);
-	}
-	timer = get_time_since(data_philo->config->base_time);
-	if (!print_log(data_philo, timer, 3))
-	{
-		drop_forks(data_philo, num_left_fork);
+		drop_forks(data, num_left_fork);
 		return (0);
 	}
 	return (1);
 }
  
-int eat_action(t_data *data_philo, int num_left_fork)
+int eat_action(t_data *data, int num_left_fork)
 {
 	long timer;
 
-	if (is_anyone_dead(data_philo))
-    {
-        drop_forks(data_philo, num_left_fork);
-		return (0);
-    }
-	pthread_mutex_lock(&data_philo->acces_life_timer);
-	data_philo->start_life = get_time_since(data_philo->config->base_time);
-	timer = data_philo->start_life;
-	++data_philo->nb_eat;
-	pthread_mutex_unlock(&data_philo->acces_life_timer);
-	if (!print_log(data_philo, timer, 4))
+	pthread_mutex_lock(&data->acces_life_timer);
+	data->start_life = get_time_since(data->config->base_time);
+	timer = data->start_life;
+	++data->nb_eat;
+	pthread_mutex_unlock(&data->acces_life_timer);
+	if (!print_log(data, timer, 4))
 	{	
-		drop_forks(data_philo, num_left_fork);
+		drop_forks(data, num_left_fork);
 		return (0);
 	}
-   	usleep(data_philo->config->time_to_eat * 1000);
-	drop_forks(data_philo, num_left_fork);
+   	usleep(data->config->time_to_eat * 1000);
+	drop_forks(data, num_left_fork);
 	return (1);
 }
 
-int    sleep_action(t_data *data_philo)
+int    sleep_action(t_data *data)
 {
 	long timer;
 
-	timer = get_time_since(data_philo->config->base_time);
-	if (!print_log(data_philo, timer, 5))
+	timer = get_time_since(data->config->base_time);
+	if (!print_log(data, timer, 5))
 		return (0);
-	usleep(data_philo->config->time_to_sleep * 1000);
+	usleep(data->config->time_to_sleep * 1000);
 	return (1);
 }

@@ -6,31 +6,30 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/07 17:07:28 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:06:55 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../includes/main.h"
 
 t_philosopher	**prepare_philos(t_config *config)
 {
-	int			i;
 	t_philosopher	**philos;
+	int				i;
 
 	philos = malloc(sizeof(t_philosopher *) * config->nb_of_philo);
 	if (!philos)
+	{
+		free_config(config);
 		return (NULL);
+	}
 	i = 0;
 	while (i < config->nb_of_philo)
 	{
 		philos[i] = init_philo(config, philos, i);
 		if (!philos[i])
 		{
-			/*while (i >= 0)
-			{
-
-				--i;
-			}*/
+			free_philo_set(philos, i - 1);
 			free_config(config);
 			free(philos);
 			return (NULL);
@@ -40,17 +39,22 @@ t_philosopher	**prepare_philos(t_config *config)
 	return (philos);
 }
 
-int run_philo(t_config *config, t_philosopher **philos)
+int	run_philo(t_config *config, t_philosopher **philos)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < config->nb_of_philo)
 	{
-		if (pthread_create(&(philos[i]->thread), NULL, philo_life, philos[i]->data_philo) != 0)
+		if (pthread_create(&(philos[i]->thread),
+				NULL, philo_life, philos[i]->data) != 0)
 		{
-			//free_data();
-			printf("Erreur creation thread %d", i);
+			pthread_mutex_lock(&config->check_if_dead);
+			*config->anyone_died = 0;
+			pthread_mutex_unlock(&config->check_if_dead);
+			printf("Erreur creation thread %d\n", i);
+			free_philo_set(philos, config->nb_of_philo - 1);
+			free_config(config);
 			return (0);
 		}
 		++i;
@@ -58,10 +62,25 @@ int run_philo(t_config *config, t_philosopher **philos)
 	return (1);
 }
 
-void wait_philo(t_config *config, t_philosopher **philos)
+int	run_reaper(pthread_t *reaper, t_config *config, t_philosopher **philos)
 {
-	int i;
-	
+	if (pthread_create(reaper, NULL, reaper_life, philos) != 0)
+	{
+		pthread_mutex_lock(&config->check_if_dead);
+		*config->anyone_died = 0;
+		pthread_mutex_unlock(&config->check_if_dead);
+		printf("Erreur creation thread reaper\n");
+		free_philo_set(philos, config->nb_of_philo - 1);
+		free_config(config);
+		return (0);
+	}
+	return (1);
+}
+
+void	wait_philo(t_config *config, t_philosopher **philos)
+{
+	int	i;
+
 	i = 0;
 	while (i < config->nb_of_philo)
 	{
@@ -72,31 +91,28 @@ void wait_philo(t_config *config, t_philosopher **philos)
 
 int	main(int argc, char **argv)
 {
-	t_philosopher **philos;
-	t_config config;
-	pthread_t mower;
-	
+	t_philosopher	**philos;
+	t_config		config;
+	pthread_t		reaper;
+
 	if (argc < 5 && argc > 6)
 	{
-		printf("Usage: ./philo nb_philo time_to_die time_to_eat time_to_sleep [nb_times_philo_must_eat]\n");
-		return (1); 
+		printf("./philo nb_philo tm_die tm_eat tm_sleep [nb_tm_philo_eat]\n");
+		return (1);
 	}
 	if (!init_config(&config, argc - 1, &argv[1]))
 		return (2);
 	philos = prepare_philos(&config);
 	if (!philos)
-		return (4);
+		return (3);
 	config.base_time = get_mls_time();
 	if (!run_philo(&config, philos))
-	{
-		return (3);
-	}
-	if (pthread_create(&mower, NULL, run_mower, philos) != 0)
-	{
-		//free_data();
-		printf("Erreur creation thread mower");
-		return (0);
-	}
+		return (4);
+	if (!run_reaper(&reaper, &config, philos))
+		return (5);
+	pthread_join(reaper, NULL);
 	wait_philo(&config, philos);
+	free_philo_set(philos, config.nb_of_philo - 1);
+	free_config(&config);
 	return (0);
 }
