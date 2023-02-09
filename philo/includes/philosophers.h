@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stddef.h>
-# include "philo_data.h"
+# include "data.h"
 # include "config.h"
 # include <sys/time.h>
 # include <unistd.h>

@@ -1,7 +1,7 @@
 #include "../includes/philosophers.h"
 
 int print_log(t_data *data_philo, long timer, int type)
-{
+{ 
 	pthread_mutex_lock(&data_philo->config->acces_printer);
 	if (type == 0)
 	{

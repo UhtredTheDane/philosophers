@@ -78,8 +78,8 @@ int	main(int argc, char **argv)
 	
 	if (argc < 5 && argc > 6)
 	{
-		printf("Error, usage: ./philo nb_of_philosophers time_to_die time_to_eat time_to_sleep [nb_of_times_each_philosopher_must_eat]\n");
-		return (1);
+		printf("Usage: ./philo nb_philo time_to_die time_to_eat time_to_sleep [nb_times_philo_must_eat]\n");
+		return (1); 
 	}
 	if (!init_config(&config, argc - 1, &argv[1]))
 		return (2);

@@ -17,6 +17,7 @@ int init_data_mutex(t_data *data)
 	}
 	return (1);
 }
+
 t_data *init_data(int num_thread, t_config *config, t_philosopher **philos)
 {
 	t_data *data;

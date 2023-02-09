@@ -1,5 +1,5 @@
-#ifndef PHILO_DATA_H
-# define PHILO_DATA_H
+#ifndef DATA_H
+# define DATA_H
 
 # include <pthread.h>
 # include <stdio.h>
@@ -19,4 +19,8 @@ typedef struct s_data
     t_config *config;
     
 } t_data;
+
+int init_data_mutex(t_data *data);
+t_data *init_data(int num_thread, t_config *config, t_philosopher **philos);
+void	free_data(t_data *data);
 #endif
