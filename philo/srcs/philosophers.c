@@ -44,18 +44,19 @@ void	*philo_life(void *arg)
 {
 	t_data	*data;
 	int		is_alive;
-	int		num_left_fork;
+	int		num_fork;
 
 	data = (t_data *) arg;
-	num_left_fork = data->num % data->config->nb_of_philo - 1;
-	if (num_left_fork == -1)
-		num_left_fork = data->config->nb_of_philo - 1;
+	if (data->num == 0)
+		num_fork = data->config->nb_of_philo - 1;
+	else
+		num_fork = data->num - 1;
 	is_alive = 1;
 	while (is_alive)
 	{
-		if (!think_action(data, num_left_fork))
+		if (!think_action(data, num_fork))
 			return (NULL);
-		if (!eat_action(data, num_left_fork))
+		if (!eat_action(data, num_fork))
 			return (NULL);
 		if (!sleep_action(data))
 			return (NULL);

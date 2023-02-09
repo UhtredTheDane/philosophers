@@ -25,7 +25,7 @@ typedef struct s_philosopher	t_philosopher;
 typedef struct s_data
 {
 	t_philosopher	**philos;
-	pthread_mutex_t	right_fork;
+	pthread_mutex_t	fork;
 	pthread_mutex_t	acces_life_timer;
 	t_config		*config;
 	long			start_life;
