@@ -29,12 +29,10 @@ int	print_log(t_data *data, long timer, int type)
 	if (type == 1)
 		printf("%ld ms %ld is thinking\n", timer, data->num);
 	else if (type == 2)
-		printf("%ld ms %ld has taken right fork\n", timer, data->num);
+		printf("%ld ms %ld has taken a fork\n", timer, data->num);
 	else if (type == 3)
-		printf("%ld ms %ld has taken left fork\n", timer, data->num);
-	else if (type == 4)
 		printf("%ld ms %ld is eating\n", timer, data->num);
-	else if (type == 5)
+	else if (type == 4)
 		printf("%ld ms %ld is sleeping\n", timer, data->num);
 	pthread_mutex_unlock(&data->config->acces_printer);
 	return (1);

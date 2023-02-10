@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:12:06 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/09 18:07:26 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:17:49 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ t_philosopher	*init_philo(t_config *config, t_philosopher **philos, int num)
 
 int	is_anyone_dead(t_data *data)
 {
-	pthread_mutex_lock(&data->config->check_if_dead);
-	if (*data->config->anyone_died == 0)
+	pthread_mutex_lock(&data->check_is_alive);
+	if (data->is_alive == 0)
 	{
-		pthread_mutex_unlock(&data->config->check_if_dead);
+		pthread_mutex_unlock(&data->check_is_alive);
 		return (1);
 	}
-	pthread_mutex_unlock(&data->config->check_if_dead);
+	pthread_mutex_unlock(&data->check_is_alive);
 	return (0);
 }
 

@@ -21,13 +21,11 @@
 typedef struct s_config
 {
 	pthread_mutex_t	acces_printer;
-	pthread_mutex_t	check_if_dead;
 	int				nb_of_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_to_eat;
-	int				*anyone_died;
 	long			base_time;
 }			t_config;
 

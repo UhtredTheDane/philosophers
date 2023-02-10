@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:11:01 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/09 18:06:55 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:15:51 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int	run_philo(t_config *config, t_philosopher **philos)
 		if (pthread_create(&(philos[i]->thread),
 				NULL, philo_life, philos[i]->data) != 0)
 		{
-			pthread_mutex_lock(&config->check_if_dead);
+			/*pthread_mutex_lock(&config->check_is_dead);
 			*config->anyone_died = 0;
-			pthread_mutex_unlock(&config->check_if_dead);
+			pthread_mutex_unlock(&config->check_if_dead);*/
 			printf("Erreur creation thread %d\n", i);
 			free_philo_set(philos, config->nb_of_philo - 1);
 			free_config(config);
@@ -66,9 +66,9 @@ int	run_reaper(pthread_t *reaper, t_config *config, t_philosopher **philos)
 {
 	if (pthread_create(reaper, NULL, reaper_life, philos) != 0)
 	{
-		pthread_mutex_lock(&config->check_if_dead);
+		/*pthread_mutex_lock(&config->check_if_dead);
 		*config->anyone_died = 0;
-		pthread_mutex_unlock(&config->check_if_dead);
+		pthread_mutex_unlock(&config->check_if_dead);*/
 		printf("Erreur creation thread reaper\n");
 		free_philo_set(philos, config->nb_of_philo - 1);
 		free_config(config);

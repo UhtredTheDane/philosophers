@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:53:22 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/09 17:33:35 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:19:28 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,17 @@ int	is_satisfied(t_data *data)
 
 int	is_all_satisfied(t_data *data, int all_satisfied)
 {
+	int i;
 	if (all_satisfied)
 	{
-		pthread_mutex_lock(&data->config->check_if_dead);
-		*data->config->anyone_died = 0;
-		pthread_mutex_unlock(&data->config->check_if_dead);
+		i = 0;
+		while (i < data->config->nb_of_philo)
+		{
+			pthread_mutex_lock(&data->philos[i]->data->check_is_alive);
+			data->philos[i]->data->is_alive = 0;
+			pthread_mutex_unlock(&data->philos[i]->data->check_is_alive);
+			++i;
+		}
 		return (1);
 	}
 	return (0);
@@ -36,13 +42,20 @@ int	is_all_satisfied(t_data *data, int all_satisfied)
 
 int	is_not_dead(t_data *data, long timer)
 {
+	int	i;
+
 	pthread_mutex_lock(&data->acces_life_timer);
 	if (timer > data->start_life + data->config->time_to_die)
 	{
 		pthread_mutex_unlock(&data->acces_life_timer);
-		pthread_mutex_lock(&data->config->check_if_dead);
-		*data->config->anyone_died = 0;
-		pthread_mutex_unlock(&data->config->check_if_dead);
+		i = 0;
+		while (i < data->config->nb_of_philo)
+		{
+			pthread_mutex_lock(&data->philos[i]->data->check_is_alive);
+			data->philos[i]->data->is_alive = 0;
+			pthread_mutex_unlock(&data->philos[i]->data->check_is_alive);
+			++i;
+		}
 		print_log(data, timer, 0);
 		return (0);
 	}
