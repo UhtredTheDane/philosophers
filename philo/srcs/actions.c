@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:21:42 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/11 21:51:02 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:29:16 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int eat_action(t_data *data, int num_fork)
 
 int    sleep_action(t_data *data)
 {
-	long timer;
 
 	if (!print_log(data, 4))
 		return (0);
