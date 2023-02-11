@@ -43,6 +43,7 @@ int	run_philo(t_config *config, t_philosopher **philos)
 {
 	int	i;
 
+	gettimeofday(&config->base_time, NULL);
 	i = 0;
 	while (i < config->nb_of_philo)
 	{
@@ -105,7 +106,6 @@ int	main(int argc, char **argv)
 	philos = prepare_philos(&config);
 	if (!philos)
 		return (3);
-	config.base_time = get_mls_time();
 	if (!run_philo(&config, philos))
 		return (4);
 	if (!run_reaper(&reaper, &config, philos))

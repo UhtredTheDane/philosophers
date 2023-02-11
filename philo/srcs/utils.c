@@ -12,12 +12,10 @@
 
 #include "../includes/main.h"
 
-int	print_log(t_data *data, int type)
+int	print_log(t_data *data, long timer, int type)
 {
-	long timer;
 
 	pthread_mutex_lock(&data->config->acces_printer);
-	timer = get_time_since(data->config->base_time);
 	if (type == 0)
 	{
 		printf("%ld ms %ld died\n", timer, data->num);

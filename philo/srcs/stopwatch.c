@@ -12,26 +12,22 @@
 
 #include "../includes/stopwatch.h"
 
-long	convert_us_in_ms(suseconds_t *micro_nb)
+long	convert_us_in_ms(long micro_nb)
 {
-	return (*micro_nb / 1000);
+	return (micro_nb / 1000);
 }
 
-long	convert_s_in_ms(time_t *s_nb)
+long	convert_s_in_ms(unsigned long micro_nb)
 {
-	return (*s_nb / 0.001);
+	return (s_nb / 0.001);
 }
-
-long	get_mls_time(void)
+ 
+long	get_time_since(struct timeval *base_time)
 {
 	struct timeval	present_time;
 
 	gettimeofday(&present_time, NULL);
-	return (convert_s_in_ms(&(present_time.tv_sec))
-		+ convert_us_in_ms(&(present_time.tv_usec)));
+	return (convert_s_in_ms(present_time.tv_sec - base_time->tv_sec))
+		+ convert_us_in_ms(present_time.tv_usec - base_time->.tv_usec);
 }
-
-long	get_time_since(long base_time)
-{
-	return (get_mls_time() - base_time);
 }

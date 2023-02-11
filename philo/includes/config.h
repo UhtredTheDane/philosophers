@@ -16,6 +16,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/time.h>
 # include "main.h"
 
 typedef struct s_config
@@ -26,7 +27,7 @@ typedef struct s_config
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_to_eat;
-	long			base_time;
+	struct timeval	base_time;
 }			t_config;
 
 int		init_config_mutex(t_config *config);
