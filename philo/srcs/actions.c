@@ -22,11 +22,9 @@ void drop_forks(t_data *data, int num_fork)
 int    think_action(t_data *data, int num_fork)
 {
 	int res;
-	long timer;
 	
 	res = (data->num + 1) % 2;
-	timer = get_time_since(&data->config->base_time);
-	if (!print_log(data, timer, 1))
+	if (!print_log(data, 1))
 		return (0);
 	if (res)
 		pthread_mutex_lock(&data->philos[num_fork]->data->fork);
@@ -35,8 +33,7 @@ int    think_action(t_data *data, int num_fork)
 		usleep(1000);
 		pthread_mutex_lock(&data->fork);
 	}
-	timer = get_time_since(&data->config->base_time);
-	if(!print_log(data, timer, 2))
+	if(!print_log(data, 2))
 	{
 		if (res)
 			pthread_mutex_unlock(&data->philos[num_fork]->data->fork);
@@ -48,8 +45,7 @@ int    think_action(t_data *data, int num_fork)
 		pthread_mutex_lock(&data->fork);
 	else
 		pthread_mutex_lock(&data->philos[num_fork]->data->fork);
-	timer = get_time_since(&data->config->base_time);
-	if (!print_log(data, timer, 2))
+	if (!print_log(data, 2))
 	{
 		drop_forks(data, num_fork);
 		return (0);
@@ -73,14 +69,12 @@ void ft_sleep(t_config *config, long time)
 
 int eat_action(t_data *data, int num_fork)
 {
-	long timer;
 
 	pthread_mutex_lock(&data->acces_life_timer);
 	data->start_life = get_time_since(&data->config->base_time);
 	++data->nb_eat;
 	pthread_mutex_unlock(&data->acces_life_timer);
-	timer = get_time_since(&data->config->base_time);
-	if (!print_log(data, timer, 3))
+	if (!print_log(data, 3))
 	{	
 		drop_forks(data, num_fork);
 		return (0);
@@ -94,8 +88,7 @@ int    sleep_action(t_data *data)
 {
 	long timer;
 
-	timer = get_time_since(&data->config->base_time);
-	if (!print_log(data, timer, 4))
+	if (!print_log(data, 4))
 		return (0);
 	ft_sleep(data->config, data->config->time_to_sleep);
 	return (1);

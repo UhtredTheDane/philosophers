@@ -12,7 +12,7 @@
 
 #include "../includes/main.h"
 
-int	print_log(t_data *data, long timer, int type)
+int	print_log(t_data *data, int type)
 {
 
 	pthread_mutex_lock(&data->config->acces_printer);
@@ -27,6 +27,7 @@ int	print_log(t_data *data, long timer, int type)
 		pthread_mutex_unlock(&data->config->acces_printer);
 		return (0);
 	}
+	timer = get_time_since(&philos[i]->data->config->base_time);
 	if (type == 1)
 		printf("%ld ms %ld is thinking\n", timer, data->num);
 	else if (type == 2)

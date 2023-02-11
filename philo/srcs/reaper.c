@@ -56,7 +56,7 @@ int	is_not_dead(t_data *data, long timer)
 			pthread_mutex_unlock(&data->philos[i]->data->check_is_alive);
 			++i;
 		}
-		print_log(data, timer, 0);
+		print_log(data, 0);
 		return (0);
 	}
 	pthread_mutex_unlock(&data->acces_life_timer);
