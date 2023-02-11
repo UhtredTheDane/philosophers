@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:53:22 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/10 16:19:28 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/11 21:52:37 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	is_not_dead(t_data *data, long timer)
 			pthread_mutex_unlock(&data->philos[i]->data->check_is_alive);
 			++i;
 		}
-		print_log(data, 0);
+		print_log(data, timer, 0);
 		return (0);
 	}
 	pthread_mutex_unlock(&data->acces_life_timer);
@@ -73,7 +73,7 @@ int	check_death(t_philosopher **philos, int all_satisfied)
 	nb_of_philo = philos[0]->data->config->nb_of_philo;
 	while (i < nb_of_philo)
 	{
-		timer = get_time_since(philos[i]->data->config->base_time);
+		timer = get_time_since(&philos[i]->data->config->base_time);
 		if (!is_not_dead(philos[i]->data, timer))
 			return (0);
 		if (all_satisfied)
