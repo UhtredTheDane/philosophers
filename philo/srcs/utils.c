@@ -6,15 +6,18 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:11:26 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/09 17:11:45 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:28:37 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/main.h"
 
-int	print_log(t_data *data, long timer, int type)
+int	print_log(t_data *data, int type)
 {
+	long timer;
+
 	pthread_mutex_lock(&data->config->acces_printer);
+	timer = get_time_since(data->config->base_time);
 	if (type == 0)
 	{
 		printf("%ld ms %ld died\n", timer, data->num);
