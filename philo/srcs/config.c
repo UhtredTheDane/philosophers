@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:03:43 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/09 17:04:33 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:23:10 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	init_config(t_config *config, int nb_params, char **params)
 	}
 	config->nb_to_eat = 0;
 	if (nb_params == 5)
-		config->nb_to_eat = ft_atoi(params[4]);
+		config->nb_to_eat = ft_atol(params[4]);
 	if (!init_config_mutex(config))
 		return (0);
 	return (1);

@@ -6,11 +6,11 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:11:26 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/11 22:30:13 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:20:33 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "../includes/utils.h"
 
 long	get_time_since(struct timeval *base_time)
 {

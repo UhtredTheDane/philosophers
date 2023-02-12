@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reaper.h                                           :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 16:59:16 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/12 15:17:18 by agengemb         ###   ########.fr       */
+/*   Created: 2023/02/09 16:25:21 by agengemb          #+#    #+#             */
+/*   Updated: 2023/02/12 15:20:21 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REAPER_H
-# define REAPER_H
+#ifndef UTILS_H
+# define UTILS_H
 
+# include <stdio.h>
 # include <pthread.h>
-# include <unistd.h>
+# include <sys/time.h>
 # include "data.h"
-# include "philosophers.h"
-# include "main.h"
 
 typedef struct s_data	t_data;
-typedef struct s_philosopher	t_philosopher;
 
-void	*reaper_life(void *arg);
-int		is_satisfied(t_data *data);
-int		is_all_satisfied(t_data *data, int all_satisfied);
-int		is_not_dead(t_data *data, long timer);
-int		check_death(t_philosopher **philos, int all_satisfied);
+int				print_log(t_data *data, int type);
+long	get_time_since(struct timeval *base_time);
+
 #endif
