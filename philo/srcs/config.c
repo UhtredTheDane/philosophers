@@ -28,15 +28,16 @@ int	init_config(t_config *config, int nb_params, char **params)
 	config->time_to_die = ft_atol(params[1]);
 	config->time_to_eat = ft_atol(params[2]);
 	config->time_to_sleep = ft_atol(params[3]);
+	config->nb_to_eat = -1;
+	if (nb_params == 5)
+		config->nb_to_eat = ft_atol(params[4]);
 	if (!config->nb_of_philo || !config->time_to_die
-		|| !config->time_to_eat || !config->time_to_sleep)
+		|| !config->time_to_eat || !config->time_to_sleep
+		|| config->nb_to_eat == 0)
 	{
 		printf("Erreur, parametres d'entrée non valides.\n");
 		return (0);
 	}
-	config->nb_to_eat = 0;
-	if (nb_params == 5)
-		config->nb_to_eat = ft_atol(params[4]);
 	if (!init_config_mutex(config))
 		return (0);
 	return (1);

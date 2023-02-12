@@ -52,6 +52,8 @@ void	*philo_life(void *arg)
 	else
 		num_fork = data->num - 1;
 	is_alive = 1;
+	if ((data->num + 1) % 2 == 0)
+		usleep(250);
 	while (is_alive)
 	{
 		if (!think_action(data, num_fork))

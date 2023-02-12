@@ -50,9 +50,12 @@ int	run_philo(t_config *config, t_philosopher **philos)
 		if (pthread_create(&(philos[i]->thread),
 				NULL, philo_life, philos[i]->data) != 0)
 		{
-			/*pthread_mutex_lock(&config->check_is_dead);
-			*config->anyone_died = 0;
-			pthread_mutex_unlock(&config->check_if_dead);*/
+			while (--i >= 0)
+			{
+				pthread_mutex_lock(&philos[i]->data->check_is_alive);
+				philos[i]->data->is_alive = 0;
+				pthread_mutex_unlock(&philos[i]->data->check_is_alive);
+			}
 			printf("Erreur creation thread %d\n", i);
 			free_philo_set(philos, config->nb_of_philo - 1);
 			free_config(config);
@@ -65,11 +68,17 @@ int	run_philo(t_config *config, t_philosopher **philos)
 
 int	run_reaper(pthread_t *reaper, t_config *config, t_philosopher **philos)
 {
+	int	i;
+
 	if (pthread_create(reaper, NULL, reaper_life, philos) != 0)
 	{
-		/*pthread_mutex_lock(&config->check_if_dead);
-		*config->anyone_died = 0;
-		pthread_mutex_unlock(&config->check_if_dead);*/
+		i = config->nb_of_philo;
+		while (--i >= 0)
+		{
+			pthread_mutex_lock(&philos[i]->data->check_is_alive);
+			philos[i]->data->is_alive = 0;
+			pthread_mutex_unlock(&philos[i]->data->check_is_alive);
+		}
 		printf("Erreur creation thread reaper\n");
 		free_philo_set(philos, config->nb_of_philo - 1);
 		free_config(config);
@@ -110,8 +119,8 @@ int	main(int argc, char **argv)
 		return (4);
 	if (!run_reaper(&reaper, &config, philos))
 		return (5);
-	pthread_join(reaper, NULL);
 	wait_philo(&config, philos);
+	pthread_join(reaper, NULL);
 	free_philo_set(philos, config.nb_of_philo - 1);
 	free_config(&config);
 	return (0);

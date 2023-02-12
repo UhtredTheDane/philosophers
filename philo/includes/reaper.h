@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:59:16 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/12 15:17:18 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/12 20:43:54 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include "philosophers.h"
 # include "main.h"
 
-typedef struct s_data	t_data;
 typedef struct s_philosopher	t_philosopher;
+typedef struct s_data			t_data;
 
 void	*reaper_life(void *arg);
 int		is_satisfied(t_data *data);

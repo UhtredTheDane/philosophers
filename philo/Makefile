@@ -6,7 +6,7 @@
 #    By: agengemb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 21:06:22 by agengemb          #+#    #+#              #
-#    Updated: 2023/01/28 08:33:37 by agengemb         ###   ########.fr        #
+#    Updated: 2023/02/12 20:09:54 by agengemb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		$(CC) $^ -o $@ -lpthread
+		$(CC) -fsanitize=thread -g $^ -o $@ -lpthread
 %.o: %.c
 		$(CC) $(CFLAGS) -c $< -o $@
 

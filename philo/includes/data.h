@@ -19,8 +19,8 @@
 # include "config.h"
 # include "philosophers.h"
 
-typedef struct s_config	t_config;
-typedef struct s_data	t_data;
+typedef struct s_config			t_config;
+typedef struct s_data			t_data;
 typedef struct s_philosopher	t_philosopher;
 typedef struct s_data
 {

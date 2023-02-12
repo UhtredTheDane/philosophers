@@ -16,15 +16,18 @@ int	is_satisfied(t_data *data)
 {
 	int	res;
 
+	if (data->config->nb_to_eat == -1)
+		return (0);
 	pthread_mutex_lock(&data->acces_life_timer);
-	res = data->config->nb_to_eat == data->nb_eat;
+	res = data->config->nb_to_eat <= data->nb_eat;
 	pthread_mutex_unlock(&data->acces_life_timer);
 	return (res);
 }
 
 int	is_all_satisfied(t_data *data, int all_satisfied)
 {
-	int i;
+	int	i;
+
 	if (all_satisfied)
 	{
 		i = 0;
@@ -94,7 +97,7 @@ void	*reaper_life(void *arg)
 	alive = 1;
 	while (alive)
 	{
-		usleep(2000);
+		usleep(200);
 		if (!check_death(philos, philos[0]->data->config->nb_to_eat))
 			alive = 0;
 	}

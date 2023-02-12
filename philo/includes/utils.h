@@ -20,7 +20,9 @@
 
 typedef struct s_data	t_data;
 
-int				print_log(t_data *data, int type);
+void	drop_forks(t_data *data, int num_fork);
+void	print_death(t_data *data);
+int		print_log(t_data *data, int type);
 long	get_time_since(struct timeval *base_time);
 
 #endif
