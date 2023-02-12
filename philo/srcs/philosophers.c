@@ -6,7 +6,7 @@
 /*   By: agengemb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:12:06 by agengemb          #+#    #+#             */
-/*   Updated: 2023/02/10 16:17:49 by agengemb         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:32:26 by agengemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*philo_life(void *arg)
 			return (NULL);
 		if (!eat_action(data, num_fork))
 			return (NULL);
-		if (!sleep_action(data))
+		if (!sleep_action(data, num_fork))
 			return (NULL);
 	}
 	return (NULL);
