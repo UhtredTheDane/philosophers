@@ -80,15 +80,18 @@ int eat_action(t_data *data, int num_fork)
 		return (0);
 	}
    	ft_sleep(data->config, data->config->time_to_eat);
-	drop_forks(data, num_fork);
 	return (1);
 }
 
-int    sleep_action(t_data *data)
+int    sleep_action(t_data *data, int num_fork)
 {
 
 	if (!print_log(data, 4))
+	{
+		drop_forks(data, num_fork);
 		return (0);
+	}
+	drop_forks(data, num_fork);
 	ft_sleep(data->config, data->config->time_to_sleep);
 	return (1);
 }

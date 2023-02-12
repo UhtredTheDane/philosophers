@@ -19,8 +19,9 @@
 typedef struct s_data	t_data;
 
 int    think_action(t_data *data, int num_fork);
+void ft_sleep(t_config *config, long time);
 int eat_action(t_data *data, int num_fork);
-int    sleep_action(t_data *data);
+int    sleep_action(t_data *data, int num_fork)
 void drop_forks(t_data *data, int num_fork);
 
 #endif
