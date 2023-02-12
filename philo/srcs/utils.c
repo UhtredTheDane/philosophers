@@ -12,6 +12,18 @@
 
 #include "../includes/main.h"
 
+long	get_time_since(struct timeval *base_time)
+{
+	struct timeval	present_time;
+	unsigned long s_nb;
+	unsigned long micro_nb;
+
+	gettimeofday(&present_time, NULL);
+	s_nb = (present_time.tv_sec - base_time->tv_sec) * 1000000;
+	micro_nb = present_time.tv_usec - base_time->tv_usec;
+	return ((s_nb + micro_nb) / 1000);
+}
+
 int	print_log(t_data *data, int type)
 {
 	long timer;
@@ -41,39 +53,3 @@ int	print_log(t_data *data, int type)
 	return (1);
 }
 
-int	ft_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-int	ft_isspace(int c)
-{
-	return (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ');
-}
-
-int	ft_atoi(const char *nptr)
-{
-	size_t	i;
-	int		negatif;
-	int		res;
-
-	i = 0;
-	while (ft_isspace(*(nptr + i)))
-		i++;
-	negatif = 0;
-	if (*(nptr + i) == '-' || *(nptr + i) == '+')
-		if (*(nptr + i++) == '-')
-			negatif = 1;
-	res = 0;
-	while (ft_isdigit(*(nptr + i)))
-	{
-		res += (*(nptr + i) - '0');
-		i++;
-		if (ft_isdigit(*(nptr + i)))
-			res *= 10;
-	}
-	if (negatif)
-		res *= -1;
-	return (res);
-}

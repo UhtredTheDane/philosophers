@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <stddef.h>
+# include <sys/time.h>
 # include "philosophers.h"
 # include "data.h"
 # include "config.h"
@@ -30,8 +32,6 @@ void			wait_philo(t_config *config, t_philosopher **philos);
 int				run_philo(t_config *config, t_philosopher **philos);
 int				run_reaper(pthread_t *reaper, t_config *config, t_philosopher **philos);
 int				print_log(t_data *data, int type);
-int				ft_isdigit(int c);
-int				ft_isspace(int c);
-int				ft_atoi(const char *nptr);
+long	get_time_since(struct timeval *base_time);
 
 #endif
