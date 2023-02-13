@@ -57,18 +57,21 @@ int	think_action(t_data *data, int num_fork)
 	return (1);
 }
 
-void	ft_sleep(t_config *config, long time)
+int	ft_sleep(t_data *data, long time)
 {
 	long	start;
 	long	timer;
 
-	start = get_time_since(&config->base_time);
+	start = get_time_since(&data->config->base_time);
 	timer = start;
 	while (timer < start + time)
 	{
 		usleep(250);
-		timer = get_time_since(&config->base_time);
+		if (is_anyone_dead(data))
+			return (0);
+		timer = get_time_since(&data->config->base_time);
 	}
+	return (1);
 }
 
 int	eat_action(t_data *data, int num_fork)
@@ -83,7 +86,11 @@ int	eat_action(t_data *data, int num_fork)
 		drop_forks(data, num_fork);
 		return (0);
 	}
-	ft_sleep(data->config, data->config->time_to_eat);
+	if (!ft_sleep(data, data->config->time_to_eat))
+	{
+		drop_forks(data, num_fork);
+		return (0);
+	}
 	return (1);
 }
 
@@ -95,6 +102,7 @@ int	sleep_action(t_data *data, int num_fork)
 		return (0);
 	}
 	drop_forks(data, num_fork);
-	ft_sleep(data->config, data->config->time_to_sleep);
+	if (!ft_sleep(data, data->config->time_to_sleep))
+		return (0);
 	return (1);
 }

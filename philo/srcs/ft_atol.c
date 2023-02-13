@@ -33,5 +33,7 @@ long	ft_atol(const char *nptr)
 		if (*(nptr + i))
 			res *= 10;
 	}
+	if (INT_MAX < res)
+		return (0);
 	return (res);
 }
