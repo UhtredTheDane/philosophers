@@ -18,6 +18,24 @@ void	drop_forks(t_data *data, int num_fork)
 	pthread_mutex_unlock(&data->philos[num_fork]->data->fork);
 }
 
+void	unlock_good_fork(t_data *data, int num_fork, int res, int order)
+{
+	if (res)
+	{
+		if (!order)
+			pthread_mutex_unlock(&data->philos[num_fork]->data->fork);
+		else
+			pthread_mutex_unlock(&data->fork);
+	}
+	else
+	{
+		if (!order)
+			pthread_mutex_unlock(&data->fork);
+		else
+			pthread_mutex_unlock(&data->philos[num_fork]->data->fork);
+	}
+}
+
 long	get_time_since(struct timeval *base_time)
 {
 	struct timeval	present_time;

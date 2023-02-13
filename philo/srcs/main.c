@@ -105,7 +105,7 @@ int	main(int argc, char **argv)
 	t_config		config;
 	pthread_t		reaper;
 
-	if (argc < 5 && argc > 6)
+	if (argc < 5 || argc > 6)
 	{
 		printf("./philo nb_philo tm_die tm_eat tm_sleep [nb_tm_philo_eat]\n");
 		return (1);

@@ -38,14 +38,9 @@ int	think_action(t_data *data, int num_fork)
 	if (!print_log(data, 1))
 		return (0);
 	lock_good_fork(data, num_fork, res, 0);
-	if (data->config->nb_of_philo <= 1)
-		return (0);
-	if (!print_log(data, 2))
+	if (!print_log(data, 2) || data->config->nb_of_philo <= 1)
 	{
-		if (res)
-			pthread_mutex_unlock(&data->philos[num_fork]->data->fork);
-		else
-			pthread_mutex_unlock(&data->fork);
+		unlock_good_fork(data, num_fork, res, 0);
 		return (0);
 	}
 	lock_good_fork(data, num_fork, res, 1);
@@ -76,16 +71,16 @@ int	ft_sleep(t_data *data, long time)
 
 int	eat_action(t_data *data, int num_fork)
 {
-	pthread_mutex_lock(&data->acces_life_timer);
-	data->start_life = get_time_since(&data->config->base_time);
-	if (data->config->nb_to_eat != -1)
-		++(data->nb_eat);
-	pthread_mutex_unlock(&data->acces_life_timer);
 	if (!print_log(data, 3))
 	{	
 		drop_forks(data, num_fork);
 		return (0);
 	}
+	pthread_mutex_lock(&data->acces_life_timer);
+	data->start_life = get_time_since(&data->config->base_time);
+	if (data->config->nb_to_eat != -1)
+		++(data->nb_eat);
+	pthread_mutex_unlock(&data->acces_life_timer);
 	if (!ft_sleep(data, data->config->time_to_eat))
 	{
 		drop_forks(data, num_fork);

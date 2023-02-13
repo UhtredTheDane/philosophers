@@ -24,5 +24,6 @@ void	drop_forks(t_data *data, int num_fork);
 void	print_death(t_data *data);
 int		print_log(t_data *data, int type);
 long	get_time_since(struct timeval *base_time);
-
+void	unlock_good_fork(t_data *data, int num_fork, int res, int order);
+{
 #endif
